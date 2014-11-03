@@ -6,4 +6,4 @@ writeKey: key value: value
 			first := false ]
 		ifFalse: [ 
 			jsonWriter mapElementSeparator ].
-	jsonWriter encodeKey: key value: value 
+	jsonWriter encodeKey: key value: value

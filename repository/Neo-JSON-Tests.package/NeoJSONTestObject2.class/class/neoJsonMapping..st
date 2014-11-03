@@ -4,4 +4,4 @@ neoJsonMapping: mapper
 	but the instance variables have to be enumerated manually per class"
 
 	mapper for: self do: [ :mapping |
-		mapping mapInstVars: #(id width height data) ] 
+		mapping mapInstVars: #(id width height data) ]

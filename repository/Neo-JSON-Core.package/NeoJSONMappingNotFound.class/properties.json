@@ -6,9 +6,10 @@
 		 ],
 	"commentStamp" : "<historical>",
 	"instvars" : [
-		 ],
+		"object",
+		"signaler" ],
 	"name" : "NeoJSONMappingNotFound",
 	"pools" : [
 		 ],
-	"super" : "NotFound",
+	"super" : "Error",
 	"type" : "normal" }

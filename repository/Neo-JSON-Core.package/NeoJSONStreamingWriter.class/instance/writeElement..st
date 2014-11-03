@@ -6,4 +6,4 @@ writeElement: value
 			first := false ]
 		ifFalse: [ 
 			jsonWriter listElementSeparator ].
-	jsonWriter nextPut: value 
+	jsonWriter nextPut: value

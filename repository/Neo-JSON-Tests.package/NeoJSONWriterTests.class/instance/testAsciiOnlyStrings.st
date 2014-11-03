@@ -14,4 +14,3 @@ testAsciiOnlyStrings
 		assert: (writer value: (String withAll: { 
 					$". $\. $/. Character tab. Character cr. Character lf.  Character newPage. Character backspace }))
 		equals: '"\"\\/\t\r\n\f\b"'
-

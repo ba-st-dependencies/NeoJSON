@@ -1,3 +1,3 @@
 accessing
 identifier
-	self subclassResponsibility 
+	self subclassResponsibility

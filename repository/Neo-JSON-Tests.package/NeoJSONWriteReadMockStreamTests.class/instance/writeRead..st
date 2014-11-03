@@ -5,4 +5,4 @@ writeRead: object
 		(NeoJSONWriter on: (NeoJSONMockStream on: stream))
 			prettyPrint: true;
 			nextPut: object ].
-	^ (NeoJSONReader on: (NeoJSONMockStream on: json readStream)) next 
+	^ (NeoJSONReader on: (NeoJSONMockStream on: json readStream)) next

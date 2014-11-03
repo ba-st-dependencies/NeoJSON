@@ -13,4 +13,3 @@ initialize
 		objects at: each put: map ].
 	json := String streamContents: [ :stream |
 		(NeoJSONWriter on: stream) nextPut: objects ]
-		

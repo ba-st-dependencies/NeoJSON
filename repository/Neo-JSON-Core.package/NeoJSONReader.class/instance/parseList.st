@@ -4,5 +4,3 @@ parseList
 		streamContents: [ :stream |
 			self parseListElementsDo: [ :each |
 				stream nextPut: each ] ]
-
-		

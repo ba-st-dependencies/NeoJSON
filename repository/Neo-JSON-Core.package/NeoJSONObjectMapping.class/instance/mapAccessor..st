@@ -1,3 +1,3 @@
 mapping
 mapAccessor: accessor
-	^ self mapAccessor: accessor to: accessor 
+	^ self mapAccessor: accessor to: accessor
