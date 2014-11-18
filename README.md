@@ -1,4 +1,4 @@
-NeoJSON [![Build Status](https://travis-ci.org/GsDevKit/NeoJSON.svg?branch=master)](https://travis-ci.org/master/NeoJSON)
+NeoJSON [![Build Status](https://travis-ci.org/GsDevKit/NeoJSON.svg?branch=master)](https://travis-ci.org/GsDevKit/NeoJSON)
 =======
 
 NeoJSON is an elegant and efficient standalone Smalltalk framework to read and write JSON converting to or from Smalltalk objects.
