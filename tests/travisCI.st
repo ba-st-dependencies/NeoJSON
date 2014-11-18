@@ -12,8 +12,8 @@ Gofer new
 GsDeployer deploy: [
   "Load NeoJSON... "
   Metacello new
-    baseline: ' NeoJSON';
-    repository: 'filetree://', gitPath, '/ NeoJSON/repository';
+    baseline: 'NeoJSON';
+    repository: 'filetree://', gitPath, '/NeoJSON/repository';
     onLock: [:ex | ex honor ];
     load: #('default')
 ].
