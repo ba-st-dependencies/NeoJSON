@@ -18,6 +18,6 @@ Gofer new
 
 Metacello new
   baseline: 'NeoJSON';
-  repository: 'github://GsDevKit/NeoJSON:master/repository';
+  repository: 'github://GsDevKit/NeoJSON:gs_master/repository';
   load.
 ```
