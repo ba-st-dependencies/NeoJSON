@@ -18,8 +18,16 @@ GsDeployer deploy: [
     load: #('default')
 ].
 
-"Run the  NeoJSON tests"
-TravisCIHarness
-  value: #( 'BaselineOfNeoJSON' )
-  value: 'TravisCISuccess.txt' 
-  value: 'TravisCIFailure.txt'.
+true ifTrue: [
+  "Run all tests in image"
+  TravisCISuiteHarness
+    value: TestCase suite
+    value: 'TravisCISuccess.txt'
+    value: 'TravisCIFailure.txt'.
+] ifFalse: [
+  "Run the  NeoJSON tests"
+  TravisCIHarness
+    value: #( 'BaselineOfNeoJSON' )
+    value: 'TravisCISuccess.txt' 
+    value: 'TravisCIFailure.txt'.
+]
