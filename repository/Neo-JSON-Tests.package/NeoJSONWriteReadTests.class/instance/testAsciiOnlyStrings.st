@@ -1,5 +1,5 @@
 testing
-testStrings
+testAsciiOnlyStrings
   | objects |
   objects := {'foo'.
   'Foo BAR'.
@@ -8,4 +8,4 @@ testStrings
   'élève en Français'.
   'Я можу їсти скло, і воно мені не зашкодить.'.
   '𣎏'}.
-  self assert: (self writeRead: objects) equals: objects
+  self assert: (self writeReadAsciiOnly: objects) equals: objects
