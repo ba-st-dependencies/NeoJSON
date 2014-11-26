@@ -14,7 +14,7 @@ testStrings
         value:
           '"\u042F \u043C\u043E\u0436\u0443 \u0457\u0441\u0442\u0438 \u0441\u043A\u043B\u043E, \u0456 \u0432\u043E\u043D\u043E \u043C\u0435\u043D\u0456 \u043D\u0435 \u0437\u0430\u0448\u043A\u043E\u0434\u0438\u0442\u044C."')
     equals: 'Я можу їсти скло, і воно мені не зашкодить.'.
-  self assert: (reader value: '"\u2338F"') equals: '𣎏'.
+  self assert: (reader value: '"\uD84C\uDF8F"') equals: '𣎏'.
   self
     assert: (reader value: '"\"\\\/\t\r\n\f\b"')
     equals:

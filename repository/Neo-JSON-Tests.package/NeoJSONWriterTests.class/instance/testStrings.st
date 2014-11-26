@@ -21,7 +21,6 @@ testStrings
               (Character backspace)}))
     equals: '"\"\\/\t\r\n\f\b"'.
   self
-    assert:
-      (writer value: 'Я можу їсти скло, і воно мені не зашкодить.' asUnicodeString)
-    equals: '"Я можу їсти скло, і воно мені не зашкодить."'.	"Unicode16"
-  self assert: (writer value: '𣎏' asUnicodeString) equals: '"𣎏"'	"Unicode32"
+    assert: (writer value: 'Я можу їсти скло, і воно мені не зашкодить.')
+    equals: '"Я можу їсти скло, і воно мені не зашкодить."'.
+  self assert: (writer value: '𣎏') equals: '"𣎏"'

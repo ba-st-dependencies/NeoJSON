@@ -2,7 +2,7 @@
 	"class" : {
 		 },
 	"instance" : {
-		"testAsciiOnlyStrings" : "dkh 11/24/2014 21:57",
+		"testAsciiOnlyStrings" : "dkh 11/25/2014 15:39",
 		"testDictionaryOfObject2" : "PaulDeBruicker 11/02/2014 19:16",
 		"testFloats" : "SvenVanCaekenberghe 6/4/2012 15:51",
 		"testIntegers" : "SvenVanCaekenberghe 6/4/2012 15:46",
@@ -12,6 +12,6 @@
 		"testObject2" : "SvenVanCaekenberghe 8/30/2013 10:12",
 		"testObject3" : "SvenVanCaekenberghe 3/22/2014 10:14",
 		"testSpecials" : "SvenVanCaekenberghe 6/4/2012 15:46",
-		"testStrings" : "dkh 11/24/2014 21:55",
-		"writeRead:" : "SvenVanCaekenberghe 6/4/2012 15:36",
-		"writeReadAsciiOnly:" : "dkh 11/24/2014 21:57" } }
+		"testStrings" : "dkh 11/25/2014 15:39",
+		"writeRead:" : "dkh 11/25/2014 15:40",
+		"writeReadAsciiOnly:" : "dkh 11/25/2014 15:40" } }
