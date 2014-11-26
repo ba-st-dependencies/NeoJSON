@@ -5,6 +5,7 @@ testStrings
   self assert: (writer value: 'foo') equals: '"foo"'.
   self assert: (writer value: 'Foo BAR') equals: '"Foo BAR"'.
   self assert: (writer value: '') equals: '""'.
+  self assert: (writer value: 'élève français') equals: '"élève français"'.
   self
     assert:
       (writer
