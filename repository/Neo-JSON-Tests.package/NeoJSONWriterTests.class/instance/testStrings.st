@@ -22,6 +22,17 @@ testStrings
               (Character backspace)}))
     equals: '"\"\\/\t\r\n\f\b"'.
   self
-    assert: (writer value: 'Я можу їсти скло, і воно мені не зашкодить.')
-    equals: '"Я можу їсти скло, і воно мені не зашкодить."'.
-  self assert: (writer value: '𣎏') equals: '"𣎏"'
+    assert:
+      (writer
+        value:
+          'Ð¯ Ð¼Ð¾Ð¶Ñ ÑÑÑÐ¸ ÑÐºÐ»Ð¾, Ñ Ð²Ð¾Ð½Ð¾ Ð¼ÐµÐ½Ñ Ð½Ðµ Ð·Ð°ÑÐºÐ¾Ð´Ð¸ÑÑ.'
+            decodeFromUTF8)
+    equals:
+      '"'
+        ,
+          'Ð¯ Ð¼Ð¾Ð¶Ñ ÑÑÑÐ¸ ÑÐºÐ»Ð¾, Ñ Ð²Ð¾Ð½Ð¾ Ð¼ÐµÐ½Ñ Ð½Ðµ Ð·Ð°ÑÐºÐ¾Ð´Ð¸ÑÑ.'
+            decodeFromUTF8
+        , '"'.
+  self
+    assert: (writer value: 'ð£' decodeFromUTF8)
+    equals: '"' , 'ð£' decodeFromUTF8 , '"'

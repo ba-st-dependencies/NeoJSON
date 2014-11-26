@@ -6,6 +6,7 @@ testStrings
   ''.
   '	\\'''.
   'élève en Français'.
-  'Я можу їсти скло, і воно мені не зашкодить.'.
-  '𣎏'}.
+  ('Ð¯ Ð¼Ð¾Ð¶Ñ ÑÑÑÐ¸ ÑÐºÐ»Ð¾, Ñ Ð²Ð¾Ð½Ð¾ Ð¼ÐµÐ½Ñ Ð½Ðµ Ð·Ð°ÑÐºÐ¾Ð´Ð¸ÑÑ.'
+    decodeFromUTF8).
+  ('ð£' decodeFromUTF8)}.
   self assert: (self writeRead: objects) equals: objects
