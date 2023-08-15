@@ -13,7 +13,7 @@ example1
             second: 15
             offset: 1 hour);
     points:
-        {(1 @ 2).
-          (3 @ 4)};
+        {(NeoJSONMockPoint x: 1 y: 2).
+          (NeoJSONMockPoint x: 3 y: 4)};
     bytes: #(2 4 6 8) asByteArray;
     yourself

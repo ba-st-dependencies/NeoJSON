@@ -1,13 +1,14 @@
 {
-	"commentStamp" : "<historical>",
+	"commentStamp" : "",
 	"super" : "Object",
-	"category" : "Neo-JSON-Tests",
+	"category" : "Neo-JSON-Tests-",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"stream"
+		"x",
+		"y"
 	],
-	"name" : "NeoJSONMockStream",
+	"name" : "NeoJSONMockPoint",
 	"type" : "normal"
 }

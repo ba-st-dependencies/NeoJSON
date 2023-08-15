@@ -9,7 +9,7 @@ neoJsonMapping: mapper
 		mapping decoder: [ :string | DateAndTime fromString: string ].
 		mapping encoder: [ :dateAndTime | dateAndTime printString ] ].
 	mapper for: #ArrayOfPoints customDo: [ :mapping |
-		mapping listOfElementSchema: Point ].  
-	mapper mapAllInstVarsFor: Point.
+		mapping listOfElementSchema: NeoJSONMockPoint ].  
+	mapper mapAllInstVarsFor: NeoJSONMockPoint.
 	mapper for: ByteArray customDo: [ :mapping |
 		mapping listOfType: ByteArray ]
