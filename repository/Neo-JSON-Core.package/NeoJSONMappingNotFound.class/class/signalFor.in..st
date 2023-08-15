@@ -1,4 +1,4 @@
-as yet unclassified
+signalling
 signalFor: anObject in: aCollection
 	"Create and signal a NotFound exception for anObject in aCollection."
 
