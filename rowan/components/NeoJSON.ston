@@ -1,0 +1,10 @@
+RwSimpleProjectLoadComponentV2 {
+	#name : 'NeoJSON',
+	#projectNames : [ ],
+	#componentNames : [	],
+	#packageNames : [
+		'Neo-JSON-Core',
+		'Neo-JSON-Tests'
+	],
+	#comment : 'core packages for NeoJSON'
+}
