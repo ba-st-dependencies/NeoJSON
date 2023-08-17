@@ -1,5 +1,6 @@
 RwSimpleProjectLoadComponentV2 {
 	#name : 'NeoJSON',
+	#preloadDoitName : 'scripts/defineDictionaryAliases',
 	#projectNames : [ ],
 	#componentNames : [	],
 	#packageNames : [
