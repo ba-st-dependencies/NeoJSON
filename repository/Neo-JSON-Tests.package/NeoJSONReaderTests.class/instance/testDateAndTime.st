@@ -8,4 +8,4 @@ testDateAndTime
 			nextAs: DateAndTime ].
 	self 
 		assert: (reader value: ' "2012-02-14T16:40:18+01:00" ') 
-		equals: (DateAndTime year: 2012 month: 2 day: 14 hour: 16 minute: 40 second: 18 offset: 1 hour)
+		equals: (DateAndTime year: 2012 month: 2 day: 14 hour: 16 minute: 40 second: 18 offset: (Duration days: 0 hours: 1 minutes: 0 seconds: 0))
