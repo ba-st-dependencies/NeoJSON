@@ -1,10 +1,11 @@
 RwSimpleProjectLoadComponentV2 {
 	#name : 'NeoJSON',
-	#preloadDoitName : 'scripts/defineDictionaryAliases',
+	#preloadDoitName : 'scripts/defineSmalltalkNamespace',
 	#projectNames : [ ],
 	#componentNames : [	],
 	#packageNames : [
 		'Neo-JSON-Core',
+		'Neo-JSON-GS64-Base-Extensions',
 		'Neo-JSON-Tests'
 	],
 	#comment : 'core packages for NeoJSON'
