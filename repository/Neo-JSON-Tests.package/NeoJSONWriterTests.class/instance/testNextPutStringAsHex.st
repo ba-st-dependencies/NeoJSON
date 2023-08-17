@@ -7,7 +7,7 @@ testNextPutStringAsHex
 				for: #StringAsHex
 					customDo: [ :mapping | 
 							mapping
-								encoder: [ :x | x asByteArray hex asUppercase ];
+								encoder: [ :x | x asByteArray asHexString asUppercase ];
 								decoder: [ :x | (ByteArray readHexFrom: x) asString ] ];
 				nextPut: 'Foo bar!' as: #StringAsHex ].
 	self assert: output equals: '"466F6F2062617221"'
