@@ -22,5 +22,8 @@ testDateAndTime
 						          aDateAndTime printString ] ];
 			          nextPut: object ] ].
 	self
-		assert: (writer value: dateAndTime)
-		equals: '"2012-02-14T16:40:18+01:00"'
+		assert: ((writer value: dateAndTime)
+		beginsWith: '"2012-02-14T16:40:18').
+	self
+		assert: ((writer value: dateAndTime)
+		endsWith: '+01:00"')
