@@ -6,7 +6,7 @@ testTime
 	writer := [ :object |
 	          String streamContents: [ :stream |
 		          (NeoJSONWriter on: stream)
-			          for: time species
+			          for: time class
 			          customDo: [ :mapping |
 				          mapping encoder: [ :aTime | aTime print24 ] ];
 			          nextPut: object ] ].

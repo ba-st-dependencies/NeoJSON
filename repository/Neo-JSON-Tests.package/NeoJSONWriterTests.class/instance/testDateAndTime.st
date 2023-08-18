@@ -17,7 +17,7 @@ testDateAndTime
 	writer := [ :object |
 	          String streamContents: [ :stream |
 		          (NeoJSONWriter on: stream)
-			          for: dateAndTime species customDo: [ :mapping |
+			          for: dateAndTime class customDo: [ :mapping |
 				          mapping encoder: [ :aDateAndTime |
 						          aDateAndTime printString ] ];
 			          nextPut: object ] ].

@@ -5,7 +5,7 @@ testDate
 	writer := [ :object | 
 		String streamContents: [ :stream |
 			(NeoJSONWriter on: stream) 
-				for: date species customDo: [ :mapping |
+				for: date class customDo: [ :mapping |
 					mapping encoder: [ :aDate | aDate yyyymmdd ] ];
 				nextPut: object ] ].
 	self assert: (writer value: date) equals: '"2012-06-08"'
