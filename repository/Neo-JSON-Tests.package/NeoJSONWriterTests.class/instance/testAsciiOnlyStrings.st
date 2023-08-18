@@ -9,7 +9,7 @@ testAsciiOnlyStrings
 			          nextPut: object ] ].
 	self
 		assert: (writer value: 'élève français')
-		equals: '"\u00E9l\u00E8ve fran\u00E7ais"'.
+		equals: '"\u00e9l\u00e8ve fran\u00e7ais"'.
 	self assert: (writer value: 'foo') equals: '"foo"'.
 	self assert: (writer value: 'Foo BAR') equals: '"Foo BAR"'.
 	self assert: (writer value: '') equals: '""'.
