@@ -2,4 +2,4 @@
 asMutator
 
 	(self notEmpty and: [ self last == $: ]) ifTrue: [ ^ self ].
-	^ (self copyWith: $:) asSymbol
+	^ (self asString copyWith: $:) asSymbol
