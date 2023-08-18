@@ -36,10 +36,10 @@ Because the most commonly used characters are all in the Basic Multilingual Plan
       trailingSurrogate := 16rDC00 + (x bitAnd: 16r3FF).	"bottom ten bits missing end of comment"
       writeStream nextPutAll: '\u'.
       writeStream
-        nextPutAll: (leadingSurrogate asHexStringWithLength: 4).
+        nextPutAll: (leadingSurrogate asHexStringPaddedTo: 4).
       writeStream nextPutAll: '\u'.
       writeStream
-        nextPutAll: (trailingSurrogate asHexStringWithLength: 4) ]
+        nextPutAll: (trailingSurrogate asHexStringPaddedTo: 4) ]
     ifFalse: [ 
       writeStream nextPutAll: '\u'.
-      writeStream nextPutAll: (code asHexStringWithLength: 4) ]
+      writeStream nextPutAll: (code asHexStringPaddedTo: 4) ]
