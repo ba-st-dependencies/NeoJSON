@@ -1,6 +1,6 @@
 RwSimpleProjectLoadComponentV2 {
 	#name : 'NeoJSON',
-	#projectNames : [ ],
+	#projectNames : [ 'Buoy' ],
 	#componentNames : [	],
 	#packageNames : [
 		'Neo-JSON-Core',
