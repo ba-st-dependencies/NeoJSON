@@ -1,7 +1,7 @@
 RwLoadSpecificationV2 {
     #specName: 'Buoy',
 	#projectName : 'Buoy',
-    #gitUrl : 'git@github.com:ba-st/Buoy.git',
+    #gitUrl : 'https://github.com/ba-st/Buoy.git',
 	#revision : 'v7',
 	#projectSpecFile : 'rowan/project.ston',
 	#componentNames : [
