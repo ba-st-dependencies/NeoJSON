@@ -1,23 +1,22 @@
-NeoJSON [![Build Status](https://travis-ci.org/GsDevKit/NeoJSON.svg?branch=gs_master)](https://travis-ci.org/GsDevKit/NeoJSON)
-=======
+# NeoJSON
 
-NeoJSON is an elegant and efficient standalone Smalltalk framework to read and write JSON converting to or from Smalltalk objects.
+A fork of the `NeoJSON` framework to be used as a dependency in [ba-st](https://github.com/ba-st)
+for GS/64.
 
-MIT Licensed.
+The `upstream` branch is supposed to track the changes in
+the main branch of [svenvc/NeoJSON](https://github.com/svenvc/NeoJSON).
 
-Go ahead and read the [NeoJSON paper](https://github.com/svenvc/docs/blob/master/neo/neo-json-paper.md).
+The `upstream-gemtalk` branch is supposed to track the changes in
+the `gs_master` branch of [GsDevKit/NeoJSON](https://github.com/GsDevKit/NeoJSON).
 
-## GemStone Installation
+[![GS64 - Unit Tests](https://github.com/ba-st-dependencies/NeoJSON/actions/workflows/unit-tests-gs64.yml/badge.svg)](https://github.com/ba-st-dependencies/NeoJSON/actions/workflows/unit-tests-gs64.yml)
 
-```Smalltalk
-Gofer new
-  package: 'GsUpgrader-Core';
-  url: 'http://ss3.gemtalksystems.com/ss/gsUpgrader';
-  load.
-(Smalltalk at: #GsUpgrader) upgradeGLASS1.
+[![GS64 3.6.6](https://img.shields.io/badge/GS64-3.6.6-informational)](https://gemtalksystems.com/products/gs64/)
 
-Metacello new
-  baseline: 'NeoJSON';
-  repository: 'github://GsDevKit/NeoJSON:gs_master/repository';
-  load.
-```
+NeoJSON is an elegant and efficient standalone Smalltalk framework to read and
+write JSON converting to or from Smalltalk objects.
+
+## License
+
+- The code is licensed under [MIT](LICENSE).
+- The documentation is licensed under [CC BY-SA 4.0](http://creativecommons.org/licenses/by-sa/4.0/).
