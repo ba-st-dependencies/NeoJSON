@@ -11,9 +11,9 @@ example1
             hour: 14
             minute: 30
             second: 15
-            offset: 1 hour);
+            offset: (Duration days: 0 hours: 1 minutes: 0 seconds: 0));
     points:
-        {(1 @ 2).
-          (3 @ 4)};
+        {(NeoJSONMockPoint x: 1 y: 2).
+          (NeoJSONMockPoint x: 3 y: 4)};
     bytes: #(2 4 6 8) asByteArray;
     yourself

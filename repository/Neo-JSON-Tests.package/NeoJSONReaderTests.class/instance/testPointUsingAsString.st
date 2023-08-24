@@ -2,7 +2,7 @@ testing
 testPointUsingAsString
 	| point |
 	point := (NeoJSONReader on: '{"x":"1","y":"2"}' readStream)
-		for: Point
+		for: NeoJSONMockPoint
 			do: [ :mapping | 
 					(mapping 
 						mapProperty: #x 
@@ -19,5 +19,5 @@ testPointUsingAsString
 					mapping
 						encoder: [ :x | x asString ];
 						decoder: [ :x | x asNumber ] ];
-		nextAs: Point.
-	self assert: point equals: 1 @ 2
+		nextAs: NeoJSONMockPoint.
+	self assert: point equals: (NeoJSONMockPoint x: 1 y: 2)

@@ -1,18 +1,17 @@
 {
-	"category" : "Neo-JSON-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "NeoJSONMapper",
+	"category" : "Neo-JSON-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"readStream",
 		"stringStream",
 		"listClass",
 		"mapClass",
-		"propertyNamesAsSymbols" ],
+		"propertyNamesAsSymbols"
+	],
 	"name" : "NeoJSONReader",
-	"pools" : [
-		 ],
-	"super" : "NeoJSONMapper",
-	"type" : "normal" }
+	"type" : "normal"
+}
