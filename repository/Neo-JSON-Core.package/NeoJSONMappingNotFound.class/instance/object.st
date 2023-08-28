@@ -1,5 +1,5 @@
 accessing
 object
-
-   "Return the value of the instance variable 'object'."
-   ^object
+	"Return the object that was not found"
+	
+	^ object

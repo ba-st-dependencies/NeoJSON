@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "OrderedDictionary",
+	"category" : "Neo-JSON-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "NeoJSONObject",
+	"type" : "normal"
+}

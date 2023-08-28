@@ -1,3 +1,3 @@
 writing
 writeObject: anObject on: jsonWriter
-	self subclassResponsibility
+	self subclassResponsibility 

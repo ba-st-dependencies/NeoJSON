@@ -1,5 +1,5 @@
-updating
-collection: newValue
-
-   "Modify the value of the instance variable 'signaler'."
-   collection := newValue
+accessing
+collection: aCollection
+	"Set the collection where something is not found in"
+	
+	collection := aCollection

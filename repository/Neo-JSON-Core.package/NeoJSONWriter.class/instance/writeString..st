@@ -1,5 +1,6 @@
 writing
 writeString: string
-  writeStream nextPut: $".
-  string do: [ :each | self encodeChar: each ].
-  writeStream nextPut: $"
+	writeStream nextPut: $".
+	1 to: string size do: [ :index |
+		self encodeChar: (string at: index) ].
+	writeStream nextPut: $"

@@ -1,5 +1,5 @@
-updating
-object: newValue
-
-   "Modify the value of the instance variable 'object'."
-   object := newValue
+accessing
+object: anObject
+	"Set the object that was not found"
+	
+	object := anObject

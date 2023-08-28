@@ -1,3 +1,3 @@
 writing
 writeFloat: float
-	float printOn: writeStream
+	floatPrinter printFloat: float on: writeStream

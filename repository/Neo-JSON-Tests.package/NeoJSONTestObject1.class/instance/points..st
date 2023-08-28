@@ -1,3 +1,3 @@
 accessing
 points: arrayOfPoints
-	points := arrayOfPoints
+	points := arrayOfPoints 
