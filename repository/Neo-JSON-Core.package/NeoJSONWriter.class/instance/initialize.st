@@ -1,7 +1,7 @@
 initialize-release
 initialize
 	super initialize.
-	self newLine: OSPlatform current lineEnding.
+	self newLine: LanguagePlatform current os lineEnding.
 	self prettyPrint: false.
 	self asciiOnly: false.
 	self writeNil: false.
