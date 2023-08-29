@@ -4,20 +4,20 @@ testRectanglePointsWithNils
 		assert: 
 			(String streamContents: [ :stream | 
 				(NeoJSONWriter on: stream)
-					for: Point do: [ :mapping | mapping mapAllInstVars ];
-					for: Rectangle do: [ :mapping | 
-						(mapping mapInstVar: #origin) valueSchema: Point.
-						(mapping mapInstVar: #corner) valueSchema: Point ];
-					nextPut: Rectangle new ])
+					for: NeoJSONMockPoint do: [ :mapping | mapping mapAllInstVars ];
+					for: NeoJSONMockRectangle do: [ :mapping | 
+						(mapping mapInstVar: #origin) valueSchema: NeoJSONMockPoint.
+						(mapping mapInstVar: #corner) valueSchema: NeoJSONMockPoint ];
+					nextPut: NeoJSONMockRectangle new ])
 		equals: '{}'.
 	self
 		assert:
 			(String streamContents: [ :stream | 
 				(NeoJSONWriter on: stream)
-					for: Point do: [ :mapping | mapping mapAllInstVars ];
-					for: Rectangle	do: [ :mapping | 
-						(mapping mapInstVar: #origin) valueSchema: Point.
-						(mapping mapInstVar: #corner) valueSchema: Point ];
+					for: NeoJSONMockPoint do: [ :mapping | mapping mapAllInstVars ];
+					for: NeoJSONMockRectangle	do: [ :mapping | 
+						(mapping mapInstVar: #origin) valueSchema: NeoJSONMockPoint.
+						(mapping mapInstVar: #corner) valueSchema: NeoJSONMockPoint ];
 					writeNil: true;
-					nextPut: Rectangle new ])
+					nextPut: NeoJSONMockRectangle new ])
 		equals: '{"origin":null,"corner":null}'.

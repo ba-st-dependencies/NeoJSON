@@ -1,29 +1,34 @@
 tests
 testRectanglePoints
+
 	| rectangle rectangleJson result |
+	rectangle := NeoJSONMockRectangle 
+		             origin: (NeoJSONMockPoint x: 3 y: 4)
+		             extent: (NeoJSONMockPoint x: 5 y: 6).
 
-	rectangle := Rectangle origin: 3 @ 4 extent: 5 @ 6.
-
-	rectangleJson := String streamContents: [ :stream | 
-		(NeoJSONWriter on: stream)
-			prettyPrint: true;
-			mapInstVarsFor: Point;
-			mapInstVarsFor: Rectangle;
-			nextPut: rectangle ].
+	rectangleJson := String streamContents: [ :stream |
+		                 (NeoJSONWriter on: stream)
+			                 prettyPrint: true;
+			                 mapInstVarsFor: NeoJSONMockPoint;
+			                 mapInstVarsFor: NeoJSONMockRectangle;
+			                 nextPut: rectangle ].
 
 	result := (NeoJSONReader on: rectangleJson readStream)
-		mapInstVarsFor: Point;
-		for: Rectangle do: [ :mapping | 
-			(mapping mapInstVar: #origin) valueSchema: Point.
-			(mapping mapInstVar: #corner) valueSchema: Point ];
-		nextAs: Rectangle.
+		          mapInstVarsFor: NeoJSONMockPoint;
+		          for: NeoJSONMockRectangle do: [ :mapping |
+			          (mapping mapInstVar: #origin) valueSchema:
+					          NeoJSONMockPoint.
+			          (mapping mapInstVar: #corner) valueSchema:
+					          NeoJSONMockPoint ];
+		          nextAs: NeoJSONMockRectangle.
 
 	self assert: result equals: rectangle.
 
 	result := (NeoJSONReader on: rectangleJson readStream)
-		mapInstVarsFor: Point;
-		for: Rectangle do: [ :mapping | 
-			mapping mapInstVars do: [ :each | each valueSchema: Point ] ];
-		nextAs: Rectangle.
-		
-	self assert: result equals: rectangle 
+		          mapInstVarsFor: NeoJSONMockPoint;
+		          for: NeoJSONMockRectangle do: [ :mapping |
+			          mapping mapInstVars do: [ :each |
+					          each valueSchema: NeoJSONMockPoint ] ];
+		          nextAs: NeoJSONMockRectangle.
+
+	self assert: result equals: rectangle

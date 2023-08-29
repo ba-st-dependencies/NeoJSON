@@ -1,4 +1,4 @@
-testing
+tests
 testPointUsingAsString
   | output |
   output := String

@@ -1,16 +1,17 @@
-testing
+tests
 testVirtualTransferObject
+
 	| data customMapping extraJson json result |
-	data := NeoJSONObject new data: (Array with: 1@1 with: 2@2).
+	data := NeoJSONObject new data: (Array with: (NeoJSONMockPoint x: 1 y: 1) with: (NeoJSONMockPoint x: 2 y: 2)).
 	extraJson := '{"foo":1,"data":[{"x":1,"y":1},{"x":2,"y":2,"z":-1}]}'.
 	"The idea here is that we are not interested in the top level object just in its data property, 
 	which should be of a specific type, hence we create a virtual transfer object"
 	customMapping := [ :mapper |
 		mapper
-			for: Point do: [ :mapping |
+			for: NeoJSONMockPoint do: [ :mapping |
 				mapping mapInstVars: #(x y) ];
 			for: #ArrayOfPoints customDo: [ :mapping |
-				mapping listOfElementSchema: Point ];
+				mapping listOfElementSchema: NeoJSONMockPoint ];
 			for: #TransferObject do: [ :mapping |
 				mapping subjectClass: NeoJSONObject.
 				(mapping mapAccessor: #data) valueSchema: #ArrayOfPoints ];

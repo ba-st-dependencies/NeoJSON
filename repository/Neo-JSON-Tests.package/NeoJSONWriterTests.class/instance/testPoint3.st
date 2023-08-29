@@ -1,4 +1,4 @@
-testing
+tests
 testPoint3
 	| writer |
 	writer := [ :object | 
