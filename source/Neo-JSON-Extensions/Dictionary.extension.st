@@ -1,6 +1,6 @@
 Extension { #name : #Dictionary }
 
-{ #category : #'*neo-json-core' }
+{ #category : #'*Neo-JSON-Extensions' }
 Dictionary >> neoJsonOn: neoJSONWriter [
 	neoJSONWriter writeMap: self
 ]

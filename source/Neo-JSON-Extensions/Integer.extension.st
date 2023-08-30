@@ -1,6 +1,6 @@
 Extension { #name : #Integer }
 
-{ #category : #'*neo-json-core' }
+{ #category : #'*Neo-JSON-Extensions' }
 Integer >> neoJsonOn: neoJSONWriter [
 	neoJSONWriter writeInteger: self
 ]

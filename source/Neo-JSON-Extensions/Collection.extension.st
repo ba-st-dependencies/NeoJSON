@@ -1,6 +1,6 @@
 Extension { #name : #Collection }
 
-{ #category : #'*neo-json-core' }
+{ #category : #'*Neo-JSON-Extensions' }
 Collection >> neoJsonOn: neoJSONWriter [
 	neoJSONWriter writeList: self
 ]

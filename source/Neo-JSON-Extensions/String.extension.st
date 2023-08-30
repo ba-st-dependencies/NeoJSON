@@ -1,6 +1,6 @@
 Extension { #name : #String }
 
-{ #category : #'*neo-json-core' }
+{ #category : #'*Neo-JSON-Extensions' }
 String >> neoJsonOn: neoJSONWriter [
 	neoJSONWriter writeString: self
 ]
