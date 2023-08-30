@@ -1,5 +1,5 @@
 RwLoadSpecificationV2 {
-  #specName: 'NeoJSON',
+  #specName: 'NeoJSON-CI',
   #projectName : 'NeoJSON',
   #diskUrl : '/opt/gemstone/projects/NeoJSON',
   #projectSpecFile : 'rowan/project.ston',
