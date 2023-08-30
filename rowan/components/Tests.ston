@@ -1,0 +1,19 @@
+RwSimpleProjectLoadComponentV2 {
+  #name : 'Tests',
+  #condition : 'tests',
+  #componentNames : [
+    'Deployment'
+  ],
+  #packageNames : [
+    'Neo-JSON-Tests'
+  ],
+  #conditionalPackageMapSpecs : {
+    'gemstone' : {
+      'allusers' : {
+        #packageNameToPlatformPropertiesMap : {
+          'Neo-JSON-Tests' : { 'symbolDictName' : 'NeoJSON' }
+        }
+      }
+    }
+  }
+}

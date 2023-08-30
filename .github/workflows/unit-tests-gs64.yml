@@ -12,5 +12,4 @@ jobs:
         uses: ba-st-actions/gs64-ci@v1
         with:
           project_name: 'NeoJSON'
-          load_spec: 'NeoJSON'
           run_tests: 'true'

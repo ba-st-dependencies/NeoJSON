@@ -1,0 +1,23 @@
+RwSimpleProjectLoadComponentV2 {
+  #name : 'Deployment',
+  #projectNames : [ 
+    'Buoy'
+  ],
+  #componentNames : [	],
+  #packageNames : [
+    'Neo-JSON-Core',
+    'Neo-JSON-Extensions',
+    'Neo-JSON-GS64-Base-Extensions'
+  ],
+  #conditionalPackageMapSpecs : {
+    'gemstone' : {
+      'allusers' : {
+        #packageNameToPlatformPropertiesMap : {
+          'Neo-JSON-Core' : { 'symbolDictName' : 'NeoJSON' },
+          'Neo-JSON-Extensions' : { 'symbolDictName' : 'Globals' },
+          'Neo-JSON-GS64-Base-Extensions' : { 'symbolDictName' : 'Globals' }
+        }
+      }
+    }
+  }
+}

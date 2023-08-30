@@ -2,10 +2,10 @@ RwProjectSpecificationV2 {
 	#specName : 'project',
 	#projectSpecPath : 'rowan',
 	#componentsPath : 'rowan/components',
-	#packagesPath : 'repository',
+	#packagesPath : 'source',
 	#projectsPath : 'rowan/projects',
 	#specsPath : 'rowan/specs',
-	#packageFormat : 'filetree',
-	#packageConvention : 'RowanHybrid',
+	#packageFormat : 'tonel',
+	#packageConvention : 'Rowan',
 	#comment : 'NeoJSON project specification'
 }
