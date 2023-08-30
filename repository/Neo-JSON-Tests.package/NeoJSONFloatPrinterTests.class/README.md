@@ -1,1 +1,0 @@
-I am NeoJSONFloatPrinterTests, the collection of unit tests for NeoJSONFloatPrinter.

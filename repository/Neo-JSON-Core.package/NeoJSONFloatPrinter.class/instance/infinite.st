@@ -1,3 +1,0 @@
-constants
-infinite
-	^ 'Inf'

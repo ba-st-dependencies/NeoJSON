@@ -7,16 +7,5 @@ RwLoadSpecificationV2 {
   #componentNames : [
     'Deployment',
     'Dependent-SUnit-Extensions'
-  ],
-  #platformProperties : {
-    'gemstone' : {
-      'allusers' : {
-        #defaultSymbolDictName : 'Buoy'
-      }
-    }
-  },
-  #customConditionalAttributes : [
-    'sunit'
-  ],
-  #comment : ''
+  ]
 }

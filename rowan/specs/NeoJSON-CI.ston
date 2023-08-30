@@ -1,0 +1,13 @@
+RwLoadSpecificationV2 {
+  #specName: 'NeoJSON',
+  #projectName : 'NeoJSON',
+  #diskUrl : '/opt/gemstone/projects/NeoJSON',
+  #projectSpecFile : 'rowan/project.ston',
+  #componentNames : [
+      'Tests'
+  ],
+  #customConditionalAttributes : [
+    'sunit'
+  ],
+  #comment : 'NeoJSON continuous integration setup'
+}
