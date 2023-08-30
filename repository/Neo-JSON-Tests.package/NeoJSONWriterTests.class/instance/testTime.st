@@ -8,6 +8,6 @@ testTime
 		          (NeoJSONWriter on: stream)
 			          for: time class
 			          customDo: [ :mapping |
-				          mapping encoder: [ :aTime | aTime print24 ] ];
+				          mapping encoder: [ :aTime | aTime printHHMMSS ] ];
 			          nextPut: object ] ].
 	self assert: (writer value: time) equals: '"14:30:08"'

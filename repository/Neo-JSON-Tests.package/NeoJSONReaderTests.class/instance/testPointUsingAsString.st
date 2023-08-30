@@ -1,4 +1,4 @@
-testing
+tests
 testPointUsingAsString
 	| point |
 	point := (NeoJSONReader on: '{"x":"1","y":"2"}' readStream)

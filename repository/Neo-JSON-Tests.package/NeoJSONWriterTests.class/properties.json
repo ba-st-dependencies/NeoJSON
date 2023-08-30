@@ -1,5 +1,5 @@
 {
-	"commentStamp" : "SvenVanCaekenberghe 6/2/2012 22:20",
+	"commentStamp" : "",
 	"super" : "TestCase",
 	"category" : "Neo-JSON-Tests",
 	"classinstvars" : [ ],

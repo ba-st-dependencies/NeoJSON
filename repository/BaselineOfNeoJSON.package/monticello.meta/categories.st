@@ -1,1 +1,1 @@
-SystemOrganization addCategory: #'BaselineOfNeoJSON'!
+SystemOrganization addCategory: #BaselineOfNeoJSON!

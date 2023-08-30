@@ -1,5 +1,5 @@
 {
-	"commentStamp" : "<historical>",
+	"commentStamp" : "",
 	"super" : "NeoJSONMapper",
 	"category" : "Neo-JSON-Core",
 	"classinstvars" : [ ],
@@ -10,7 +10,9 @@
 		"prettyPrint",
 		"level",
 		"newLine",
-		"asciiOnly"
+		"asciiOnly",
+		"writeNil",
+		"floatPrinter"
 	],
 	"name" : "NeoJSONWriter",
 	"type" : "normal"

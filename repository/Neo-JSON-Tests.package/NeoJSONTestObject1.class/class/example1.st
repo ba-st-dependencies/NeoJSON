@@ -1,4 +1,4 @@
-instance creation
+examples
 example1
   ^ self new
     id: 123;

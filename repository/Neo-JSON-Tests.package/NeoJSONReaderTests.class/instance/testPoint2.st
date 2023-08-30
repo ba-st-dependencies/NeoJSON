@@ -1,4 +1,4 @@
-testing
+tests
 testPoint2
 	| reader |
 	reader := [ :string | 

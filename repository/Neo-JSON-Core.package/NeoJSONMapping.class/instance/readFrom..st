@@ -1,3 +1,3 @@
 parsing
 readFrom: jsonReader
-	self subclassResponsibility
+	self subclassResponsibility 

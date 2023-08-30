@@ -1,7 +1,4 @@
 private
 encodeKey: key value: value as: valueSchema
-	self nextPut: key.
-	self prettyPrintSpace.
-	writeStream nextPut: $:.
-	self prettyPrintSpace.
+	self encodeKey: key.
 	self nextPut: value as: valueSchema
