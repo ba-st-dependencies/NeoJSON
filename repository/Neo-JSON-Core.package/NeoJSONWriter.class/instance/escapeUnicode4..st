@@ -1,4 +1,6 @@
 private
 escapeUnicode4: codePoint
-	writeStream nextPutAll: '\u'.
-	codePoint printOn: writeStream base: 16 nDigits: 4
+
+	writeStream
+		nextPutAll: '\u';
+		nextPutAll: (codePoint asHexStringPaddedTo: 4)
