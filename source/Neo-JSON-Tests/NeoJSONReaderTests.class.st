@@ -215,7 +215,7 @@ NeoJSONReaderTests >> testNextStringAsHex [
 			customDo: [ :mapping | 
 					mapping
 						encoder: [ :x | x asByteArray asHexString asUppercase ];
-						decoder: [ :x | (ByteArray readHexFrom: x) asString ] ];
+						decoder: [ :x | (ByteArray readHexFrom: x) utf8Decoded ] ];
 		nextAs: #StringAsHex.
 	self assert: string equals: 'Foo bar!'
 ]
