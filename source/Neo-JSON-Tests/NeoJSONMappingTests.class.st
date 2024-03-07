@@ -34,41 +34,49 @@ NeoJSONMappingTests >> testDynamicTyping [
 	self assert: result equals: data
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 NeoJSONMappingTests >> testSymbolOrStringInstVarMapping [
+
 	| data out1 out2 result1 result2 |
-	data := Array with: 1@2 with: 3@4.
+	data := Array
+		        with: (NeoJSONMockPoint x: 1 y: 2)
+		        with: (NeoJSONMockPoint x: 3 y: 4).
 	out1 := String streamContents: [ :out |
-		(NeoJSONWriter on: out)
-			for: Point do: [ :mapping | mapping mapInstVars: #(x y) ];
-			nextPut: data ].
+		        (NeoJSONWriter on: out)
+			        for: NeoJSONMockPoint
+			        do: [ :mapping | mapping mapInstVars: #( x y ) ];
+			        nextPut: data ].
 	result1 := (NeoJSONReader on: out1 readStream)
-		for: Point do: [ :mapping | mapping mapInstVars: #(x y) ];
-		nextListAs: Point.
+		           for: NeoJSONMockPoint
+		           do: [ :mapping | mapping mapInstVars: #( x y ) ];
+		           nextListAs: NeoJSONMockPoint.
 	self assert: result1 equals: data.
 	out2 := String streamContents: [ :out |
-		(NeoJSONWriter on: out)
-			for: Point do: [ :mapping | mapping mapInstVars: #('x' 'y') ];
-			nextPut: data ].
+		        (NeoJSONWriter on: out)
+			        for: NeoJSONMockPoint
+			        do: [ :mapping | mapping mapInstVars: #( 'x' 'y' ) ];
+			        nextPut: data ].
 	result2 := (NeoJSONReader on: out1 readStream)
-		for: Point do: [ :mapping | mapping mapInstVars: #('x' 'y') ];
-		nextListAs: Point.
+		           for: NeoJSONMockPoint
+		           do: [ :mapping | mapping mapInstVars: #( 'x' 'y' ) ];
+		           nextListAs: NeoJSONMockPoint.
 	self assert: result2 equals: data
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 NeoJSONMappingTests >> testVirtualTransferObject [
+
 	| data customMapping extraJson json result |
-	data := NeoJSONObject new data: (Array with: 1@1 with: 2@2).
+	data := NeoJSONObject new data: (Array with: (NeoJSONMockPoint x: 1 y: 1) with: (NeoJSONMockPoint x: 2 y: 2)).
 	extraJson := '{"foo":1,"data":[{"x":1,"y":1},{"x":2,"y":2,"z":-1}]}'.
 	"The idea here is that we are not interested in the top level object just in its data property, 
 	which should be of a specific type, hence we create a virtual transfer object"
 	customMapping := [ :mapper |
 		mapper
-			for: Point do: [ :mapping |
+			for: NeoJSONMockPoint do: [ :mapping |
 				mapping mapInstVars: #(x y) ];
 			for: #ArrayOfPoints customDo: [ :mapping |
-				mapping listOfElementSchema: Point ];
+				mapping listOfElementSchema: NeoJSONMockPoint ];
 			for: #TransferObject do: [ :mapping |
 				mapping subjectClass: NeoJSONObject.
 				(mapping mapAccessor: #data) valueSchema: #ArrayOfPoints ];

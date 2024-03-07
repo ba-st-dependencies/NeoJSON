@@ -32,7 +32,7 @@ Class {
 		'upper',
 		'base'
 	],
-	#category : #'Neo-JSON-Core'
+	#category : 'Neo-JSON-Core'
 }
 
 { #category : #'instance creation' }

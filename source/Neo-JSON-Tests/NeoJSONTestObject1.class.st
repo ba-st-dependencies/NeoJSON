@@ -32,18 +32,28 @@ Class {
 	#category : 'Neo-JSON-Tests'
 }
 
-{ #category : #'instance creation' }
+{ #category : #examples }
 NeoJSONTestObject1 class >> example1 [
-	^ self new
-		id: 123;
-		name: 'Example1';
-		timestamp: (DateAndTime year: 2012 month: 06 day: 08 hour: 14 minute: 30 second: 15 offset: 1 hour);
-		points: (Array with: 1@2 with: 3@4);
-		bytes: #[ 2 4 6 8 ];
-		yourself
+  ^ self new
+    id: 123;
+    name: 'Example1';
+    timestamp:
+        (DateAndTime
+            year: 2012
+            month: 06
+            day: 08
+            hour: 14
+            minute: 30
+            second: 15
+            offset: (Duration days: 0 hours: 1 minutes: 0 seconds: 0));
+    points:
+        {(NeoJSONMockPoint x: 1 y: 2).
+          (NeoJSONMockPoint x: 3 y: 4)};
+    bytes: #(2 4 6 8) asByteArray;
+    yourself
 ]
 
-{ #category : #accessing }
+{ #category : #examples }
 NeoJSONTestObject1 class >> neoJsonMapping: mapper [
 	mapper for: self do: [ :mapping |
 		mapping mapInstVars: #(id name).
@@ -54,8 +64,8 @@ NeoJSONTestObject1 class >> neoJsonMapping: mapper [
 		mapping decoder: [ :string | DateAndTime fromString: string ].
 		mapping encoder: [ :dateAndTime | dateAndTime printString ] ].
 	mapper for: #ArrayOfPoints customDo: [ :mapping |
-		mapping listOfElementSchema: Point ].  
-	mapper mapAllInstVarsFor: Point.
+		mapping listOfElementSchema: NeoJSONMockPoint ].  
+	mapper mapAllInstVarsFor: NeoJSONMockPoint.
 	mapper for: ByteArray customDo: [ :mapping |
 		mapping listOfType: ByteArray ]
 ]

@@ -4,57 +4,65 @@ I am NeoJSONReaderTests, a test suite for NeoJSONReader.
 Class {
 	#name : #NeoJSONReaderTests,
 	#superclass : #TestCase,
-	#category : #'Neo-JSON-Tests'
+	#category : 'Neo-JSON-Tests'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 NeoJSONReaderTests >> testAllowNil [
 	self 
 		should: [ 
 			(NeoJSONReader on: 'null' readStream)
-				mapInstVarsFor: Point;
-				nextAs: Point ] 
+				mapInstVarsFor: NeoJSONMockPoint;
+				nextAs: NeoJSONMockPoint ] 
 		raise: NeoJSONParseError.
 	self
 		assert: ((NeoJSONReader on: 'null' readStream)
-						mapInstVarsFor: Point;
-						for: Point do: [ :mapping | mapping allowNil ];
-						nextAs: Point)
+						mapInstVarsFor: NeoJSONMockPoint;
+						for: NeoJSONMockPoint do: [ :mapping | mapping allowNil ];
+						nextAs: NeoJSONMockPoint)
 		equals: nil.
 	self
 		assert: ((NeoJSONReader on: '[ { "x" : 1, "y" : 2 }, null, { "x" : 3, "y" : -1 } ]' readStream)
-						mapInstVarsFor: Point;
-						for: Point do: [ :mapping | mapping allowNil ];
-						for: #ArrayOfPoints customDo: [ :mapping | mapping listOfElementSchema: Point ];
+						mapInstVarsFor: NeoJSONMockPoint;
+						for: NeoJSONMockPoint do: [ :mapping | mapping allowNil ];
+						for: #ArrayOfPoints customDo: [ :mapping | mapping listOfElementSchema: NeoJSONMockPoint ];
 						nextAs: #ArrayOfPoints)
-		equals: (Array with: 1 @ 2 with: nil with: 3 @ -1).
+		equals: (Array with: (NeoJSONMockPoint x: 1 y: 2) with: nil with: (NeoJSONMockPoint x: 3 y: -1)).
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 NeoJSONReaderTests >> testArrayOfPoints [
+
 	| reader |
-	reader := [ :string | 
-		(NeoJSONReader on: string readStream) 
-			for: Point do: [ :mapping |
-				mapping mapInstVars: #(x y) ];
-			for: #ArrayOfPoints customDo: [ :mapping |
-				mapping listOfElementSchema: Point ];
-			nextAs: #ArrayOfPoints ].
-	self assert: (reader value: '[ { "x":1, "y":2 }, { "x":-1, "y":-2 } ]') equals: (Array with: 1@2 with: -1@ -2) . 
-	self assert: (reader value: '[ ]') equals: #().
-	self assert: (reader value: '[ { } ]') equals: (Array with: Point new)
+	reader := [ :string |
+	          (NeoJSONReader on: string readStream)
+		          for: NeoJSONMockPoint
+		          do: [ :mapping | mapping mapInstVars: #( x y ) ];
+		          for: #ArrayOfPoints
+		          customDo: [ :mapping |
+			          mapping listOfElementSchema: NeoJSONMockPoint ];
+		          nextAs: #ArrayOfPoints ].
+	self
+		assert: (reader value: '[ { "x":1, "y":2 }, { "x":-1, "y":-2 } ]')
+		equals: {
+				(NeoJSONMockPoint x: 1 y: 2).
+				(NeoJSONMockPoint x: -1 y: -2) }.
+	self assert: (reader value: '[ ]') equals: #(  ).
+	self
+		assert: (reader value: '[ { } ]')
+		equals: { NeoJSONMockPoint new }
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 NeoJSONReaderTests >> testArrayOfPointsUsingNextListAs [
 	| reader |
 	reader := [ :string | 
 		(NeoJSONReader on: string readStream) 
-			mapInstVarsFor: Point;
-			nextListAs: Point ].
-	self assert: (reader value: '[ { "x":1, "y":2 }, { "y":-2, "x":-1 } ]') equals: (Array with: 1@2 with: -1@ -2) . 
+			mapInstVarsFor: NeoJSONMockPoint;
+			nextListAs: NeoJSONMockPoint ].
+	self assert: (reader value: '[ { "x":1, "y":2 }, { "y":-2, "x":-1 } ]') equals: (Array with: (NeoJSONMockPoint x: 1 y: 2) with: (NeoJSONMockPoint x: -1 y: -2)) . 
 	self assert: (reader value: '[ ]') equals: #().
-	self assert: (reader value: '[ { } ]') equals: (Array with: Point new) 
+	self assert: (reader value: '[ { } ]') equals: (Array with: NeoJSONMockPoint new) 
 ]
 
 { #category : #testing }
@@ -91,13 +99,23 @@ NeoJSONReaderTests >> testByteArray [
 
 { #category : #testing }
 NeoJSONReaderTests >> testDate [
+
 	| reader |
-	reader := [ :input | 
-		(NeoJSONReader on: input readStream) 
-			for: Date customDo: [ :mapping |
-				mapping decoder: [ :string | Date fromString: string ] ];
-			nextAs: Date ].
-	self assert: (reader value: ' "2012-06-08" ') equals: (Date fromString: '2012-06-08') 
+	reader := [ :input |
+	          (NeoJSONReader on: input readStream)
+		          for: Date customDo: [ :mapping |
+			          mapping decoder: [ :string |
+					          | dateSubstrings |
+					          dateSubstrings := (string substrings: $- asString)
+						                            asOrderedCollection.
+					          Date
+						          newDay: dateSubstrings removeLast asNumber
+						          monthNumber: dateSubstrings removeLast asNumber
+						          year: dateSubstrings removeLast asNumber ] ];
+		          nextAs: Date ].
+	self
+		assert: (reader value: ' "2012-06-08" ')
+		equals: (Date newDay: 8 month: 'June' year: 2012)
 ]
 
 { #category : #testing }
@@ -110,7 +128,7 @@ NeoJSONReaderTests >> testDateAndTime [
 			nextAs: DateAndTime ].
 	self 
 		assert: (reader value: ' "2012-02-14T16:40:18+01:00" ') 
-		equals: (DateAndTime year: 2012 month: 2 day: 14 hour: 16 minute: 40 second: 18 offset: 1 hour)
+		equals: (DateAndTime year: 2012 month: 2 day: 14 hour: 16 minute: 40 second: 18 offset: (Duration days: 0 hours: 1 minutes: 0 seconds: 0))
 ]
 
 { #category : #testing }
@@ -196,8 +214,8 @@ NeoJSONReaderTests >> testNextStringAsHex [
 		for: #StringAsHex
 			customDo: [ :mapping | 
 					mapping
-						encoder: [ :x | x asByteArray hex asUppercase ];
-						decoder: [ :x | (ByteArray readHexFrom: x) asString ] ];
+						encoder: [ :x | x asByteArray asHexString asUppercase ];
+						decoder: [ :x | (ByteArray readHexFrom: x) utf8Decoded ] ];
 		nextAs: #StringAsHex.
 	self assert: string equals: 'Foo bar!'
 ]
@@ -237,19 +255,28 @@ NeoJSONReaderTests >> testOrderedCollection [
 		equals: OrderedCollection
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 NeoJSONReaderTests >> testOrderedCollectionOfPoints [
+
 	| reader |
-	reader := [ :string | 
-		(NeoJSONReader on: string readStream) 
-			for: Point do: [ :mapping |
-				mapping mapInstVars: #(x y) ];
-			for: #OrderedCollectionOfPoints customDo: [ :mapping |
-				mapping listOfType: OrderedCollection andElementSchema: Point ];
-			nextAs: #OrderedCollectionOfPoints ].
-	self assert: (reader value: '[ { "x":1, "y":2 }, { "x":-1, "y":-2 } ]') equals: (Array with: 1@2 with: -1@ -2) asOrderedCollection. 
+	reader := [ :string |
+	          (NeoJSONReader on: string readStream)
+		          for: NeoJSONMockPoint
+		          do: [ :mapping | mapping mapInstVars: #( x y ) ];
+		          for: #OrderedCollectionOfPoints customDo: [ :mapping |
+			          mapping
+				          listOfType: OrderedCollection
+				          andElementSchema: NeoJSONMockPoint ];
+		          nextAs: #OrderedCollectionOfPoints ].
+	self
+		assert: (reader value: '[ { "x":1, "y":2 }, { "x":-1, "y":-2 } ]')
+		equals: {
+				(NeoJSONMockPoint x: 1 y: 2).
+				(NeoJSONMockPoint x: -1 y: -2) } asOrderedCollection.
 	self assert: (reader value: '[ ]') equals: OrderedCollection new.
-	self assert: (reader value: '[ { } ]') equals: (OrderedCollection with: Point new)
+	self
+		assert: (reader value: '[ { } ]')
+		equals: (OrderedCollection with: NeoJSONMockPoint new)
 ]
 
 { #category : #testing }
@@ -263,55 +290,66 @@ NeoJSONReaderTests >> testParseErrors [
 	self should: [ (NeoJSONReader on: '[]"extra"' readStream) next; failIfNotAtEnd ] raise: NeoJSONParseError.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 NeoJSONReaderTests >> testPoint [
 	| reader |
 	reader := [ :string | 
-		(NeoJSONReader on: string readStream) nextAs: Point ].
+		(NeoJSONReader on: string readStream) nextAs: NeoJSONMockPoint ].
 	self should: [ reader value: '{"x":1,"y":2}' ] raise: NeoJSONMappingNotFound
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 NeoJSONReaderTests >> testPoint1 [
+
 	| reader |
-	reader := [ :string | 
-		(NeoJSONReader on: string readStream) 
-			for: Point do: [ :mapping |
-				mapping mapProperty: 'x' getter: [ :point | point x ] setter: [ :point :value | point setX: value setY: point y ].
-				mapping mapProperty: 'y' getter: [ :point | point y ] setter: [ :point :value | point setX: point x setY: value ]. ];
-			nextAs: Point ].
-	self assert: (reader value: '{"x":1,"y":2}') equals: 1@2. 
-	self assert: (reader value: '{}') equals: Point new
+	reader := [ :string |
+	          (NeoJSONReader on: string readStream)
+		          for: NeoJSONMockPoint do: [ :mapping |
+			          mapping
+				          mapProperty: 'x'
+				          getter: [ :point | point x ]
+				          setter: [ :point :value |
+					          point setX: value setY: point y ].
+			          mapping
+				          mapProperty: 'y'
+				          getter: [ :point | point y ]
+				          setter: [ :point :value |
+					          point setX: point x setY: value ] ];
+		          nextAs: NeoJSONMockPoint ].
+	self
+		assert: (reader value: '{"x":1,"y":2}')
+		equals: (NeoJSONMockPoint x: 1 y: 2).
+	self assert: (reader value: '{}') equals: NeoJSONMockPoint new
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 NeoJSONReaderTests >> testPoint2 [
 	| reader |
 	reader := [ :string | 
 		(NeoJSONReader on: string readStream) 
-			mapAllInstVarsFor: Point;
-			nextAs: Point ].
-	self assert: (reader value: '{"x":1,"y":2}') equals: 1@2. 
-	self assert: (reader value: '{}') equals: Point new
+			mapAllInstVarsFor: NeoJSONMockPoint;
+			nextAs: NeoJSONMockPoint ].
+	self assert: (reader value: '{"x":1,"y":2}') equals: (NeoJSONMockPoint x: 1 y: 2). 
+	self assert: (reader value: '{}') equals: NeoJSONMockPoint new
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 NeoJSONReaderTests >> testPoint3 [
 	| reader |
 	reader := [ :string | 
 		(NeoJSONReader on: string readStream) 
-			for: Point do: [ :mapping |
+			for: NeoJSONMockPoint do: [ :mapping |
 				mapping mapInstVars: #(x y) ];
-			nextAs: Point ].
-	self assert: (reader value: '{"x":1,"y":2}') equals: 1@2. 
-	self assert: (reader value: '{}') equals: Point new
+			nextAs: NeoJSONMockPoint ].
+	self assert: (reader value: '{"x":1,"y":2}') equals: (NeoJSONMockPoint x: 1 y: 2). 
+	self assert: (reader value: '{}') equals: NeoJSONMockPoint new
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 NeoJSONReaderTests >> testPointUsingAsString [
 	| point |
 	point := (NeoJSONReader on: '{"x":"1","y":"2"}' readStream)
-		for: Point
+		for: NeoJSONMockPoint
 			do: [ :mapping | 
 					(mapping 
 						mapProperty: #x 
@@ -328,8 +366,8 @@ NeoJSONReaderTests >> testPointUsingAsString [
 					mapping
 						encoder: [ :x | x asString ];
 						decoder: [ :x | x asNumber ] ];
-		nextAs: Point.
-	self assert: point equals: 1 @ 2
+		nextAs: NeoJSONMockPoint.
+	self assert: point equals: (NeoJSONMockPoint x: 1 y: 2)
 ]
 
 { #category : #testing }
@@ -347,18 +385,21 @@ NeoJSONReaderTests >> testPropertyNamesAsSymbols [
 
 { #category : #testing }
 NeoJSONReaderTests >> testSmallDictionary [
+
 	| json map smallDictionaryClass |
 	json := '{ "x" : true, "y" : false, "key-1" : 1 }'.
-	smallDictionaryClass := Smalltalk at: #SmallDictionary ifAbsent: [ Dictionary ].
-	map := (NeoJSONReader on: json readStream) 
-		mapClass: smallDictionaryClass;
-		next.
-	self 
-		assert: map 
-		equals: (smallDictionaryClass new at: 'x' put: true; at: 'y' put: false; at: 'key-1' put: 1; yourself).
-	self 
-		assert: map class 
-		equals: smallDictionaryClass
+	smallDictionaryClass := LanguagePlatform current
+		                        globalNamed: #SmallDictionary
+		                        ifAbsent: [ Dictionary ].
+	map := (NeoJSONReader on: json readStream)
+		       mapClass: smallDictionaryClass;
+		       next.
+	self assert: map equals: (smallDictionaryClass new
+			 at: 'x' put: true;
+			 at: 'y' put: false;
+			 at: 'key-1' put: 1;
+			 yourself).
+	self assert: map class equals: smallDictionaryClass
 ]
 
 { #category : #testing }
@@ -405,11 +446,15 @@ NeoJSONReaderTests >> testSymbol [
 
 { #category : #testing }
 NeoJSONReaderTests >> testTime [
+
 	| reader |
-	reader := [ :input | 
-		(NeoJSONReader on: input readStream) 
-			for: Time customDo: [ :mapping |
-				mapping decoder: [ :string | Time fromString: string ] ];
-			nextAs: Time ].
-	self assert: (reader value: ' "14:30:08" ') equals: (Time hour: 14 minute: 30 second: 8)
+	reader := [ :input |
+	          (NeoJSONReader on: input readStream)
+		          for: Time
+		          customDo: [ :mapping |
+			          mapping decoder: [ :string | Time fromString: string ] ];
+		          nextAs: Time ].
+	self
+		assert: (reader value: ' "14:30:08" ')
+		equals: (Time fromSeconds: 8 + (30 * 60) + (14 * 3600))
 ]

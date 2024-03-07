@@ -71,28 +71,46 @@ NeoJSONWriterTests >> testByteArray [
 
 { #category : #testing }
 NeoJSONWriterTests >> testDate [
-	| writer |
+	| date writer |
+	date := Date newDay: 8 month: 'June' year: 2012.
 	writer := [ :object | 
 		String streamContents: [ :stream |
 			(NeoJSONWriter on: stream) 
-				for: Date customDo: [ :mapping |
-					mapping encoder: [ :date | date yyyymmdd ] ];
+				for: date class customDo: [ :mapping |
+					mapping encoder: [ :aDate | aDate yyyymmdd ] ];
 				nextPut: object ] ].
-	self assert: (writer value: (Date fromString: '2012-06-08')) equals: '"2012-06-08"'
+	self assert: (writer value: date) equals: '"2012-06-08"'
 ]
 
 { #category : #testing }
-NeoJSONWriterTests >> testDateAndTime [ 
-	| writer |
-	writer := [ :object | 
-		String streamContents: [ :stream |
-			(NeoJSONWriter on: stream) 
-				for: DateAndTime customDo: [ :mapping |
-					mapping encoder: [ :dateAndTime | dateAndTime printString ] ];
-				nextPut: object ] ].
-	self 
-		assert: (writer value: (DateAndTime year: 2012 month: 2 day: 14 hour: 16 minute: 40 second: 18 offset: 1 hour)) 
-		equals: '"2012-02-14T16:40:18+01:00"'
+NeoJSONWriterTests >> testDateAndTime [
+
+	| dateAndTime writer |
+	dateAndTime := DateAndTime
+		               year: 2012
+		               month: 2
+		               day: 14
+		               hour: 16
+		               minute: 40
+		               second: 18
+		               offset: (Duration
+				                days: 0
+				                hours: 1
+				                minutes: 0
+				                seconds: 0).
+	writer := [ :object |
+	          String streamContents: [ :stream |
+		          (NeoJSONWriter on: stream)
+			          for: dateAndTime class customDo: [ :mapping |
+				          mapping encoder: [ :aDateAndTime |
+						          aDateAndTime printString ] ];
+			          nextPut: object ] ].
+	self
+		assert: ((writer value: dateAndTime)
+		beginsWith: '"2012-02-14T16:40:18').
+	self
+		assert: ((writer value: dateAndTime)
+		endsWith: '+01:00"')
 ]
 
 { #category : #testing }
@@ -155,9 +173,11 @@ NeoJSONWriterTests >> testListsExtra [
 		String streamContents: [ :stream |
 			(NeoJSONWriter on: stream) nextPut: object ] ].
 	#( OrderedCollection LinkedList ByteArray IntegerArray SortedCollection ) do: [ :each |
-		Smalltalk at: each ifPresent: [ :collectionClass |
+		LanguagePlatform current
+				 globalNamed: each
+				 ifPresent: [ :collectionClass |
 			self assert: (writer value: (collectionClass withAll: #(1 2 3))) equals: '[1,2,3]'.
-			self assert: (writer value: collectionClass new) equals: '[]' ] ]
+			self assert: (writer value: collectionClass new) equals: '[]' ] ifAbsent: [ ]]
 
 ]
 
@@ -192,11 +212,11 @@ NeoJSONWriterTests >> testMapsExtra [
 	self assert: (writer value: (IdentityDictionary newFromPairs: #( 'x' 1))) equals: '{"x":1}'.
 	self assert: (writer value: IdentityDictionary new) equals: '{}'.
 	#( SmallDictionary OrderedDictionary OrderedIdentityDictionary ) do: [ :each |
-		| dictionaryClass |
-		dictionaryClass := Smalltalk at: each ifAbsent: [ nil ].
-		dictionaryClass ifNotNil: [	
+		LanguagePlatform current
+				 globalNamed: each
+				 ifPresent:  [	:dictionaryClass |
 			self assert: (writer value: (dictionaryClass new at: 'x' put: 1; at: 'y' put: 2; yourself)) equals: '{"x":1,"y":2}'.
-			self assert: (writer value: dictionaryClass new) equals: '{}'] ]
+			self assert: (writer value: dictionaryClass new) equals: '{}'] ifAbsent: [ ] ]
 
 ]
 
@@ -209,7 +229,7 @@ NeoJSONWriterTests >> testNextPutStringAsHex [
 				for: #StringAsHex
 					customDo: [ :mapping | 
 							mapping
-								encoder: [ :x | x asByteArray hex asUppercase ];
+								encoder: [ :x | x asByteArray asHexString asUppercase ];
 								decoder: [ :x | (ByteArray readHexFrom: x) asString ] ];
 				nextPut: 'Foo bar!' as: #StringAsHex ].
 	self assert: output equals: '"466F6F2062617221"'
@@ -235,92 +255,96 @@ NeoJSONWriterTests >> testNull [
 	self assert: (writer value: nil) equals: 'null'
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 NeoJSONWriterTests >> testPoint [
+
 	| writer |
-	writer := [ :object | 
-		String streamContents: [ :stream |
-			(NeoJSONWriter on: stream) nextPut: object ] ].
-	self should: [ writer value: 1@2 ] raise: NeoJSONMappingNotFound
+	writer := [ :object |
+	          String streamContents: [ :stream |
+		          (NeoJSONWriter on: stream) nextPut: object ] ].
+	self
+		should: [ writer value: (NeoJSONMockPoint x: 1 y: 2) ]
+		raise: NeoJSONMappingNotFound
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 NeoJSONWriterTests >> testPoint1 [
 	| writer |
 	writer := [ :object | 
 		String streamContents: [ :stream |
 			(NeoJSONWriter on: stream) 
-				for: Point do: [ :mapping |
+				for: NeoJSONMockPoint do: [ :mapping |
 					mapping mapProperty: 'x' getter: [ :point | point x ] setter: [ :point :value | point x: value ].
 					mapping mapProperty: 'y' getter: [ :point | point y ] setter: [ :point :value | point y: value ]. ];
 				nextPut: object ] ].
-	self assert: (writer value: 1@2) equals: '{"x":1,"y":2}'.
-	self assert: (writer value: Point new) equals: '{}'
+	self assert: (writer value: (NeoJSONMockPoint x: 1 y: 2)) equals: '{"x":1,"y":2}'.
+	self assert: (writer value: NeoJSONMockPoint new) equals: '{}'
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 NeoJSONWriterTests >> testPoint2 [
 	| writer |
 	writer := [ :object | 
 		String streamContents: [ :stream |
 			(NeoJSONWriter on: stream) 
-				mapAllInstVarsFor: Point;
+				mapAllInstVarsFor: NeoJSONMockPoint;
 				nextPut: object ] ].
-	self assert: (writer value: 1@2) equals: '{"x":1,"y":2}'.
-	self assert: (writer value: Point new) equals: '{}'
+	self assert: (writer value: (NeoJSONMockPoint x: 1 y: 2)) equals: '{"x":1,"y":2}'.
+	self assert: (writer value: NeoJSONMockPoint new) equals: '{}'
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 NeoJSONWriterTests >> testPoint3 [
 	| writer |
 	writer := [ :object | 
 		String streamContents: [ :stream |
 			(NeoJSONWriter on: stream) 
-				for: Point do: [ :mapping |
+				for: NeoJSONMockPoint do: [ :mapping |
 					mapping mapInstVars: #(x y) ];
 				nextPut: object ] ].
-	self assert: (writer value: 1@2) equals: '{"x":1,"y":2}'.
-	self assert: (writer value: Point new) equals: '{}'
+	self assert: (writer value: (NeoJSONMockPoint x: 1 y: 2)) equals: '{"x":1,"y":2}'.
+	self assert: (writer value: NeoJSONMockPoint new) equals: '{}'
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 NeoJSONWriterTests >> testPointUsingAsString [
-	| output |
-	output := String
-		streamContents: [ :out | 
-			(NeoJSONWriter on: out)
-				for: Point
-					do: [ :mapping | 
-							(mapping 
-								mapProperty: #x 
-								getter: [ :object | object x ] 
-								setter: [ :object :value | object setX: value setY: object y ])
-								valueSchema: #AsString.
-							(mapping
-								mapProperty: #y
-								getter: [ :object | object y ]
-								setter: [ :object :value | object setX: object x setY: value ]) 
-								valueSchema: #AsString ];
-				for: #AsString
-					customDo: [ :mapping | 
-							mapping
-								encoder: [ :x | x asString ];
-								decoder: [ :x | x asNumber ] ];
-				nextPut: 1 @ 2 ].
-	self assert: output equals: '{"x":"1","y":"2"}'
+  | output |
+  output := String
+    streamContents: [ :out | 
+      (NeoJSONWriter on: out)
+        for: NeoJSONMockPoint
+          do: [ :mapping | 
+              (mapping
+                mapProperty: #'x'
+                getter: [ :object | object x ]
+                setter: [ :object :value | object setX: value setY: object y ])
+                valueSchema: #'AsString'.
+              (mapping
+                mapProperty: #'y'
+                getter: [ :object | object y ]
+                setter: [ :object :value | object setX: object x setY: value ])
+                valueSchema: #'AsString' ];
+        for: #'AsString'
+          customDo: [ :mapping | 
+              mapping
+                encoder: [ :x | x asString ];
+                decoder: [ :x | x asNumber ] ];
+        nextPut: (NeoJSONMockPoint x: 1 y: 2) ].
+  self
+    assert: (output = '{"x":"1","y":"2"}' or: [ output = '{"y":"2","x":"1"}' ])
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 NeoJSONWriterTests >> testPointWriteNil [
 	| writer |
 	writer := [ :object | 
 		String streamContents: [ :stream |
 			(NeoJSONWriter on: stream) 
 				writeNil: true;
-				mapAllInstVarsFor: Point;
+				mapAllInstVarsFor: NeoJSONMockPoint;
 				nextPut: object ] ].
-	self assert: (writer value: 1@2) equals: '{"x":1,"y":2}'.
-	self assert: (writer value: Point new) equals: '{"x":null,"y":null}'
+	self assert: (writer value: (NeoJSONMockPoint x: 1 y: 2)) equals: '{"x":1,"y":2}'.
+	self assert: (writer value: NeoJSONMockPoint new) equals: '{"x":null,"y":null}'
 ]
 
 { #category : #testing }
@@ -391,12 +415,15 @@ NeoJSONWriterTests >> testSymbol [
 
 { #category : #testing }
 NeoJSONWriterTests >> testTime [
-	| writer |
-	writer := [ :object | 
-		String streamContents: [ :stream |
-			(NeoJSONWriter on: stream) 
-				for: Time customDo: [ :mapping |
-					mapping encoder: [ :time | time printString ] ];
-				nextPut: object ] ].
-	self assert: ((writer value: (Time fromSeconds: 52208)) includesSubstring: '2:30:08')
+
+	| time writer |
+	time := Time fromSeconds: 8 + (30 * 60) + (14 * 3600).
+	writer := [ :object |
+	          String streamContents: [ :stream |
+		          (NeoJSONWriter on: stream)
+			          for: time class
+			          customDo: [ :mapping |
+				          mapping encoder: [ :aTime | aTime printHHMMSS ] ];
+			          nextPut: object ] ].
+	self assert: (writer value: time) equals: '"14:30:08"'
 ]

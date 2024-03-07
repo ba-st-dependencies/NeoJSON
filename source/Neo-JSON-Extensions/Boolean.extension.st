@@ -1,6 +1,6 @@
 Extension { #name : #Boolean }
 
-{ #category : #'*neo-json-core' }
+{ #category : #'*Neo-JSON-Extensions' }
 Boolean >> neoJsonOn: neoJSONWriter [
 	neoJSONWriter writeBoolean: self
 ]

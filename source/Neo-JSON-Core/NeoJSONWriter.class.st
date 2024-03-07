@@ -34,36 +34,8 @@ Class {
 		'writeNil',
 		'floatPrinter'
 	],
-	#category : #'Neo-JSON-Core'
+	#category : 'Neo-JSON-Core'
 }
-
-{ #category : #example }
-NeoJSONWriter class >> exampleCoordinates [
-	<gtExample>
-	^ { 0@0 . 1@2. 2@4. 3@6 . 4@8}
-]
-
-{ #category : #example }
-NeoJSONWriter class >> exampleCoordinatesCustomWriting [
-	<gtExample>
-	^ String streamContents: [ :out |
-		| writer |
-		writer := self on: out.
-		writer mapAllInstVarsFor: Point.
-		writer nextPut: self exampleCoordinates ]
-]
-
-{ #category : #example }
-NeoJSONWriter class >> exampleCoordinatesGeneric [
-	<gtExample>
-	^ (0 to: 4) collect: [ :each | { 'x' -> each . 'y' -> (each * 2) } asDictionary ] 
-]
-
-{ #category : #example }
-NeoJSONWriter class >> exampleCoordinatesGenericWriting [
-	<gtExample>
-	^ self toString: self exampleCoordinatesGeneric
-]
 
 { #category : #'instance creation' }
 NeoJSONWriter class >> on: writeStream [
@@ -165,8 +137,10 @@ NeoJSONWriter >> escapeChar: code [
 
 { #category : #private }
 NeoJSONWriter >> escapeUnicode4: codePoint [
-	writeStream nextPutAll: '\u'.
-	codePoint printOn: writeStream base: 16 nDigits: 4
+
+	writeStream
+		nextPutAll: '\u';
+		nextPutAll: (codePoint asHexStringPaddedTo: 4)
 ]
 
 { #category : #private }
@@ -204,7 +178,7 @@ NeoJSONWriter >> indentedDo: block [
 { #category : #'initialize-release' }
 NeoJSONWriter >> initialize [
 	super initialize.
-	self newLine: OSPlatform current lineEnding.
+	self newLine: LanguagePlatform current os lineEnding.
 	self prettyPrint: false.
 	self asciiOnly: false.
 	self writeNil: false.

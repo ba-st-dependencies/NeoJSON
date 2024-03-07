@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'printer'
 	],
-	#category : #'Neo-JSON-Tests'
+	#category : 'Neo-JSON-Tests'
 }
 
 { #category : #running }

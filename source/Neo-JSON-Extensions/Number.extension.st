@@ -1,6 +1,6 @@
 Extension { #name : #Number }
 
-{ #category : #'*neo-json-core' }
+{ #category : #'*Neo-JSON-Extensions' }
 Number >> neoJsonOn: neoJSONWriter [
 	neoJSONWriter writeFloat: self asFloat
 ]

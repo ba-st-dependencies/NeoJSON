@@ -5,7 +5,7 @@ I am NeoJSONObjectTests, I hold unit tests for NeoJSONObject.
 Class {
 	#name : #NeoJSONObjectTests,
 	#superclass : #TestCase,
-	#category : #'Neo-JSON-Tests'
+	#category : 'Neo-JSON-Tests'
 }
 
 { #category : #testing }

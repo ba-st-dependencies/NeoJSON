@@ -1,6 +1,6 @@
 Extension { #name : #UndefinedObject }
 
-{ #category : #'*neo-json-core' }
+{ #category : #'*Neo-JSON-Extensions' }
 UndefinedObject >> neoJsonOn: neoJSONWriter [
 	neoJSONWriter writeNull
 ]
