@@ -16,13 +16,13 @@ NeoJSONExamplesTests >> testPoints [
 	json := String streamContents: [ :out |
 		(NeoJSONWriter on: out)
 			prettyPrint: true;
-			mapInstVarsFor: Point;
+			mapInstVarsFor: NeoJSONMockPoint;
 			nextPut: points ].
 		
 	result := (NeoJSONReader on: json readStream)
-		mapInstVarsFor: Point;
+		mapInstVarsFor: NeoJSONMockPoint;
 		for: #ListOfPoints customDo: [ :mapping |
-			mapping listOfElementSchema: Point ];
+			mapping listOfElementSchema: NeoJSONMockPoint ];
 			mapInstVarsFor: NeoJSONMockPoint;
 			nextPut: points.
 		
