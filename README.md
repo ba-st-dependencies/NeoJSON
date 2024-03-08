@@ -15,11 +15,6 @@ the `gs_master` branch of [GsDevKit/NeoJSON](https://github.com/GsDevKit/NeoJSON
 
 NeoJSON is an elegant and efficient standalone Smalltalk framework to read and
 write JSON converting to or from Smalltalk objects.
-# NeoJSON
-
-NeoJSON is an elegant and efficient standalone Smalltalk framework to read and write JSON converting to or from Smalltalk objects.
-
-[![CI](https://github.com/svenvc/NeoJSON/actions/workflows/CI.yml/badge.svg)](https://github.com/svenvc/NeoJSON/actions/workflows/CI.yml)
 
 ## License
 

@@ -18,14 +18,7 @@ NeoJSONExamplesTests >> testPoints [
 			prettyPrint: true;
 			mapInstVarsFor: NeoJSONMockPoint;
 			nextPut: points ].
-		
-	result := (NeoJSONReader on: json readStream)
-		mapInstVarsFor: NeoJSONMockPoint;
-		for: #ListOfPoints customDo: [ :mapping |
-			mapping listOfElementSchema: NeoJSONMockPoint ];
-			mapInstVarsFor: NeoJSONMockPoint;
-			nextPut: points.
-		
+	
 	result := (NeoJSONReader on: json readStream)
 		mapInstVarsFor: NeoJSONMockPoint;
 		for: #ListOfPoints customDo: [ :mapping |
