@@ -1,45 +1,46 @@
 Class {
-	#name : #NeoJSONMockRectangle,
-	#superclass : #Object,
+	#name : 'NeoJSONMockRectangle',
+	#superclass : 'Object',
 	#instVars : [
 		'origin',
 		'corner'
 	],
-	#category : 'Neo-JSON-Tests'
+	#category : 'Neo-JSON-Tests',
+	#package : 'Neo-JSON-Tests'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NeoJSONMockRectangle class >> origin: aPoint extent: anotherPoint [
 
 	^ self new initializeOrigin: aPoint extent: anotherPoint
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 NeoJSONMockRectangle >> = anObject [
 
 	^ self species = anObject species and: [
 		  origin = anObject origin and: [ corner = anObject corner ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONMockRectangle >> corner [
 	^ corner
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 NeoJSONMockRectangle >> hash [
 
 	^ origin hash bitXor: corner hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 NeoJSONMockRectangle >> initializeOrigin: aPoint extent: anotherPoint [
 
 	origin := aPoint.
 	corner := anotherPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONMockRectangle >> origin [
 	^ origin
 ]

@@ -3,12 +3,13 @@ I am NeoJSONObjectTests, I hold unit tests for NeoJSONObject.
 
 "
 Class {
-	#name : #NeoJSONObjectTests,
-	#superclass : #TestCase,
-	#category : 'Neo-JSON-Tests'
+	#name : 'NeoJSONObjectTests',
+	#superclass : 'TestCase',
+	#category : 'Neo-JSON-Tests',
+	#package : 'Neo-JSON-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONObjectTests >> exampleJSONSchema [
 	^ NeoJSONObject fromString: '{
   "$id" : "https://example.com/schemas/address",
@@ -25,7 +26,7 @@ NeoJSONObjectTests >> exampleJSONSchema [
 }'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONObjectTests >> testArray [
 	| jsonArray array |
 	jsonArray := '[1,2,3]'.
@@ -40,7 +41,7 @@ NeoJSONObjectTests >> testArray [
 	self assertCollection: array hasSameElements: #(1 2 3)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONObjectTests >> testAtAt [
 	| object |
 	object := NeoJSONObject new.
@@ -55,7 +56,7 @@ NeoJSONObjectTests >> testAtAt [
 	self assert: (object at: #foo at: #foo) isNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONObjectTests >> testAtPath [
 	| object |
 	object := NeoJSONObject newFrom:  (Array with:  #one -> ( NeoJSONObject newFrom:  (Array with:  #two -> ( NeoJSONObject newFrom: (Array with:  #three -> 42) ) ) )).
@@ -75,7 +76,7 @@ NeoJSONObjectTests >> testAtPath [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONObjectTests >> testAtPathPut [
 	| object |
 	object := NeoJSONObject new.
@@ -98,7 +99,7 @@ NeoJSONObjectTests >> testAtPathPut [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONObjectTests >> testCRUD [
 	| object |
 	object := NeoJSONObject new.
@@ -118,7 +119,7 @@ NeoJSONObjectTests >> testCRUD [
 	self assert: object isEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONObjectTests >> testFindPath [
 	| json path |
 	json := self exampleJSONSchema.
@@ -142,7 +143,7 @@ NeoJSONObjectTests >> testFindPath [
 		equals: #(())
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONObjectTests >> testFindPaths [
 	| json paths |
 	json := self exampleJSONSchema.
@@ -166,7 +167,7 @@ NeoJSONObjectTests >> testFindPaths [
 		self assert: (json atPath: each) notNil ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONObjectTests >> testJSON [
 	| data  json object |
 	data := NeoJSONObject newFrom: (Array with: #foo->1 with: #bar->2 with: #str->'Str!' with: #bool->true with: #flt->1.5).
@@ -178,7 +179,7 @@ NeoJSONObjectTests >> testJSON [
 	self assert: (NeoJSONObject fromString: json) equals: object
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONObjectTests >> testPathAccess [
 	| data |
 	data := NeoJSONObject fromString: '{"foo":1,"bar":2,"array":[{"a":1},{"b":2}]}'.

@@ -2,12 +2,13 @@
 I am NeoJSONMappingTests, testing more exotic kinds of mapping constructs.
 "
 Class {
-	#name : #NeoJSONMappingTests,
-	#superclass : #TestCase,
-	#category : 'Neo-JSON-Tests'
+	#name : 'NeoJSONMappingTests',
+	#superclass : 'TestCase',
+	#category : 'Neo-JSON-Tests',
+	#package : 'Neo-JSON-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONMappingTests >> testDynamicTyping [
 	| data customMapping json result |
 	data := Array with: 'foo'->1 with: #('foo' 2).
@@ -34,7 +35,7 @@ NeoJSONMappingTests >> testDynamicTyping [
 	self assert: result equals: data
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NeoJSONMappingTests >> testSymbolOrStringInstVarMapping [
 
 	| data out1 out2 result1 result2 |
@@ -63,7 +64,7 @@ NeoJSONMappingTests >> testSymbolOrStringInstVarMapping [
 	self assert: result2 equals: data
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NeoJSONMappingTests >> testVirtualTransferObject [
 
 	| data customMapping extraJson json result |

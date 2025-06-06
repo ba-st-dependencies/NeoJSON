@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfNeoJSON }
+Package { #name : 'BaselineOfNeoJSON' }

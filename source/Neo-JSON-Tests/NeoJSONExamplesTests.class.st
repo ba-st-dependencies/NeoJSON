@@ -2,12 +2,13 @@
 NeoJSONExamplesTests runs a couple of examples as tests
 "
 Class {
-	#name : #NeoJSONExamplesTests,
-	#superclass : #TestCase,
-	#category : #'Neo-JSON-Tests'
+	#name : 'NeoJSONExamplesTests',
+	#superclass : 'TestCase',
+	#category : 'Neo-JSON-Tests',
+	#package : 'Neo-JSON-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 NeoJSONExamplesTests >> testMultiInstances [
 	"Newline delimited JSON (application/x-ndjson) - https://github.com/ndjson/ndjson-spec"
 	"JSON Lines (application/jsonl) - https://jsonlines.org"
@@ -26,7 +27,7 @@ NeoJSONExamplesTests >> testMultiInstances [
 	self deny: ((NeoJSONReader on: json readStream) next; atEnd)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NeoJSONExamplesTests >> testPoints [
 	| points json result |
 	
@@ -61,7 +62,7 @@ NeoJSONExamplesTests >> testPoints [
 	self assert: result equals: points asOrderedCollection.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NeoJSONExamplesTests >> testRectanglePoints [
 
 	| rectangle rectangleJson result |
@@ -97,7 +98,7 @@ NeoJSONExamplesTests >> testRectanglePoints [
 	self assert: result equals: rectangle
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NeoJSONExamplesTests >> testRectanglePointsWithNils [
 	self
 		assert: 
