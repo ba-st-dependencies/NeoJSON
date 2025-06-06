@@ -8,56 +8,57 @@ I hold a getter and setter block to do the actual work. The property name is use
 Optionally, the schema for the value of my property can be specified. This is then used recursively.
 "
 Class {
-	#name : #NeoJSONPropertyMapping,
-	#superclass : #Object,
+	#name : 'NeoJSONPropertyMapping',
+	#superclass : 'Object',
 	#instVars : [
 		'propertyName',
 		'valueSchema',
 		'getter',
 		'setter'
 	],
-	#category : 'Neo-JSON-Core'
+	#category : 'Neo-JSON-Core',
+	#package : 'Neo-JSON-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONPropertyMapping >> getter: block [
 	getter := block
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 NeoJSONPropertyMapping >> printOn: stream [
 	super printOn: stream.
 	stream nextPut: $(; print: propertyName; nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONPropertyMapping >> propertyName [
 	^ propertyName 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONPropertyMapping >> propertyName: symbolOrString [
 	propertyName := symbolOrString asSymbol
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NeoJSONPropertyMapping >> readObject: anObject from: jsonReader [
 	| value |
 	value := jsonReader nextAs: valueSchema.
 	setter value: anObject value: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONPropertyMapping >> setter: block [
 	setter := block
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONPropertyMapping >> valueSchema: schemaName [
 	valueSchema := schemaName
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 NeoJSONPropertyMapping >> writeObject: anObject on: jsonMapWriter [
 	| value |
 	value := getter value: anObject.

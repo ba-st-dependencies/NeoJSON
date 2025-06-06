@@ -5,39 +5,40 @@ I help in writing streamed maps and lists.
 This is an internal class used by NeoJSONWriter to deal with interleaving elements and separators as well as pretty printing.
 "
 Class {
-	#name : #NeoJSONStreamingWriter,
-	#superclass : #Object,
+	#name : 'NeoJSONStreamingWriter',
+	#superclass : 'Object',
 	#instVars : [
 		'jsonWriter',
 		'first'
 	],
-	#category : 'Neo-JSON-Core'
+	#category : 'Neo-JSON-Core',
+	#package : 'Neo-JSON-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NeoJSONStreamingWriter class >> on: jsonWriter [
 	^ self new
 		on: jsonWriter;
 		yourself
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 NeoJSONStreamingWriter >> initialize [
 	super initialize.
 	first := true
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 NeoJSONStreamingWriter >> on: aJSONWriter [
 	jsonWriter := aJSONWriter
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONStreamingWriter >> wasUsed [
 	^ first not
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 NeoJSONStreamingWriter >> writeElement: value [
 	first 
 		ifTrue: [ 
@@ -48,7 +49,7 @@ NeoJSONStreamingWriter >> writeElement: value [
 	jsonWriter nextPut: value 
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 NeoJSONStreamingWriter >> writeElement: value as: valueSchema [
 	first 
 		ifTrue: [ 
@@ -59,7 +60,7 @@ NeoJSONStreamingWriter >> writeElement: value as: valueSchema [
 	jsonWriter nextPut: value as: valueSchema
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 NeoJSONStreamingWriter >> writeKey: key value: value [
 	first 
 		ifTrue: [ 
@@ -70,7 +71,7 @@ NeoJSONStreamingWriter >> writeKey: key value: value [
 	jsonWriter encodeKey: key value: value 
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 NeoJSONStreamingWriter >> writeKey: key value: value as: valueSchema [
 	first 
 		ifTrue: [ 
@@ -81,7 +82,7 @@ NeoJSONStreamingWriter >> writeKey: key value: value as: valueSchema [
 	jsonWriter encodeKey: key value: value as: valueSchema
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONStreamingWriter >> writeNil [
 	^ jsonWriter writeNil
 ]

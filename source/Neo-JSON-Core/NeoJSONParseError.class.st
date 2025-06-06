@@ -5,7 +5,8 @@ I am an Error.
 I am signalled when JSON input is not valid while parsing.
 "
 Class {
-	#name : #NeoJSONParseError,
-	#superclass : #Error,
-	#category : 'Neo-JSON-Core'
+	#name : 'NeoJSONParseError',
+	#superclass : 'Error',
+	#category : 'Neo-JSON-Core',
+	#package : 'Neo-JSON-Core'
 }

@@ -40,37 +40,38 @@ The fact that I am an OrderedDictionary means to I maintain the order of keys. T
 I work together with NeoJSONArray.
 "
 Class {
-	#name : #NeoJSONObject,
-	#superclass : #OrderedDictionary,
-	#category : 'Neo-JSON-Core'
+	#name : 'NeoJSONObject',
+	#superclass : 'OrderedDictionary',
+	#category : 'Neo-JSON-Core',
+	#package : 'Neo-JSON-Core'
 }
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 NeoJSONObject class >> fromStream: readStream [
 	"Parse stream as JSON, so that maps become instances of me and lists instances of NeoJSONArray"
 
-	^ (NeoJSONReader on: readStream readStream)
+	^ (NeoJSONReader on: readStream)
 			mapClass: self;
 			listClass: NeoJSONArray;
 			propertyNamesAsSymbols: true;
 			next
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 NeoJSONObject class >> fromString: string [
 	"Parse string as JSON, so that maps become instances of me and lists instances of NeoJSONArray"
 
 	^ self fromStream: string readStream
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 NeoJSONObject class >> readFrom: readStream [
 	"Parse stream as JSON, so that maps become instances of me and lists instances of NeoJSONArray"
 
 	^ self fromStream: readStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONObject >> at: key [
 	"I return nil for missing keys.
 	My superclass would signal a KeyNotFound."
@@ -78,12 +79,12 @@ NeoJSONObject >> at: key [
 	^ self at: key ifAbsent: [ nil ]
 ]
 
-{ #category : #add }
+{ #category : 'add' }
 NeoJSONObject >> at: key add: object [
 	^ self at: key put: object
 ]
 
-{ #category : #'nested dictionaries' }
+{ #category : 'nested dictionaries' }
 NeoJSONObject >> at: firstKey at: secondKey [
 	"I return nil for missing keys.
 	My superclass would signal a KeyNotFound."
@@ -91,14 +92,14 @@ NeoJSONObject >> at: firstKey at: secondKey [
 	^ self atPath: { firstKey. secondKey }
 ]
 
-{ #category : #'nested dictionaries' }
+{ #category : 'nested dictionaries' }
 NeoJSONObject >> at: firstKey at: secondKey put: value [
 	"Store value under secondKey in nested object under firstKey, create new level when needed"
 
 	^ self atPath: { firstKey. secondKey } put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONObject >> at: key ifPresent: aPresentBlock ifAbsentPut: anAbsentBlock [
 	"Lookup the given key in the receiver. If it is present, answer the
 	value of evaluating the first block optionally with the value associated with the key.
@@ -113,7 +114,7 @@ NeoJSONObject >> at: key ifPresent: aPresentBlock ifAbsentPut: anAbsentBlock [
 		ifAbsent: [ self at: key put: anAbsentBlock value ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONObject >> atPath: keyCollection [
 	"Use each key in keyCollection recursively, return nil when a key is missing.
 	Note how keys can also be indexes to arrays."
@@ -125,7 +126,7 @@ NeoJSONObject >> atPath: keyCollection [
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONObject >> atPath: keyCollection add: newValue [
 	"Use each key in keyCollection recursively, create new levels when needed.
 	Note how keys can also be indexes to arrays.
@@ -141,7 +142,7 @@ NeoJSONObject >> atPath: keyCollection add: newValue [
 	^ target at: keyCollection last add: newValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONObject >> atPath: keyCollection put: newValue [
 	"Use each key in keyCollection recursively, create new levels when needed.
 	Note how keys can also be indexes to arrays."
@@ -156,7 +157,7 @@ NeoJSONObject >> atPath: keyCollection put: newValue [
 	^ target at: keyCollection last put: newValue
 ]
 
-{ #category : #'reflective operations' }
+{ #category : 'reflective operations' }
 NeoJSONObject >> doesNotUnderstand: message [
 	"Overwritten so that 'self foo' becomes 'self at: #foo'
 	and 'self foo: 1' becomes 'self at: #foo put: 1' except that self is returned"
@@ -170,7 +171,7 @@ NeoJSONObject >> doesNotUnderstand: message [
 		ifFalse: [ super doesNotUnderstand: message ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONObject >> findPath: conditionBlock [
 	"Find and return the first path to an object in the graph that I represent 
 	for which conditionBlock holds. Return nil when not found."
@@ -184,7 +185,7 @@ NeoJSONObject >> findPath: conditionBlock [
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONObject >> findPaths: conditionBlock [
 	"Find and return all paths to objects in the graph that I represent 
 	for which conditionBlock holds. Return an empty collection when none are found."
@@ -199,14 +200,14 @@ NeoJSONObject >> findPaths: conditionBlock [
 	^ found
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONObject >> name [
 	"Overwritten to make this accessor available as key"
 
 	^ self at: #name
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 NeoJSONObject >> printOn: stream [
 	"I use my JSON representation when printing myself"
 
@@ -218,7 +219,7 @@ NeoJSONObject >> printOn: stream [
 				print: exception ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONObject >> removeAtPath: keyCollection [
 	"Use each key in keyCollection recursively and remove the final key.
 	Note how keys can also be indexes to arrays."
@@ -231,7 +232,7 @@ NeoJSONObject >> removeAtPath: keyCollection [
 	^ target removeKey: keyCollection last
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 NeoJSONObject >> value [
 	"Overwritten to make this accessor available as key"
 

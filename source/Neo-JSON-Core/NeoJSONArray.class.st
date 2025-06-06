@@ -11,19 +11,20 @@ Returning NeoJSONArrays and NeoJSONObjects, simple subclasses, allows to add som
 
 "
 Class {
-	#name : #NeoJSONArray,
-	#superclass : #OrderedCollection,
-	#category : #'Neo-JSON-Core'
+	#name : 'NeoJSONArray',
+	#superclass : 'OrderedCollection',
+	#category : 'Neo-JSON-Core',
+	#package : 'Neo-JSON-Core'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 NeoJSONArray >> at: index add: object [
 	^ index = '-'
 		ifTrue: [ self addLast: object ]
 		ifFalse: [ self insert: object before: index ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONArray >> atPath: keyCollection [
 	"Use each key in keyCollection recursively, return nil when a key is missing.
 	Note how keys can also be indexes to arrays."
@@ -35,7 +36,7 @@ NeoJSONArray >> atPath: keyCollection [
 	^ value
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 NeoJSONArray >> atPath: keyCollection add: newValue [
 	"Use each key in keyCollection recursively, create new levels when needed.
 	Note how keys can also be indexes to arrays.
@@ -51,7 +52,7 @@ NeoJSONArray >> atPath: keyCollection add: newValue [
 	^ target at: keyCollection last add: newValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONArray >> atPath: keyCollection put: newValue [
 	"Use each key in keyCollection recursively, create new levels when needed.
 	Note how keys can also be indexes to arrays."
@@ -66,7 +67,7 @@ NeoJSONArray >> atPath: keyCollection put: newValue [
 	^ target at: keyCollection last put: newValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONArray >> findPath: conditionBlock [
 	"Find and return the first path to an object in the graph that I represent 
 	for which conditionBlock holds. Return nil when not found."
@@ -80,7 +81,7 @@ NeoJSONArray >> findPath: conditionBlock [
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONArray >> findPaths: conditionBlock [
 	"Find and return all paths to objects in the graph that I represent 
 	for which conditionBlock holds. Return an empty collection when none are found."
@@ -95,7 +96,7 @@ NeoJSONArray >> findPaths: conditionBlock [
 	^ found
 ]
 
-{ #category : #print }
+{ #category : 'print' }
 NeoJSONArray >> printOn: stream [
 	"I use my JSON representation when printing myself"
 
@@ -107,7 +108,7 @@ NeoJSONArray >> printOn: stream [
 				print: exception ]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 NeoJSONArray >> removeKey: index [
 	"Polymorphic with NeoJSONObject: remove the element at index"
 

@@ -4,17 +4,18 @@ I am NeoJSONCustomMapping.
 I read the next JSON value and turn it into a Smalltalk object using a converter block.
 "
 Class {
-	#name : #NeoJSONCustomMapping,
-	#superclass : #NeoJSONMapping,
+	#name : 'NeoJSONCustomMapping',
+	#superclass : 'NeoJSONMapping',
 	#instVars : [
 		'schemaName',
 		'reader',
 		'writer'
 	],
-	#category : #'Neo-JSON-Core'
+	#category : 'Neo-JSON-Core',
+	#package : 'Neo-JSON-Core'
 }
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 NeoJSONCustomMapping >> decoder: block [
 	"Set a decoder block that accepts the next object representation read 
 	and converts it into the actual object to be returned."
@@ -24,7 +25,7 @@ NeoJSONCustomMapping >> decoder: block [
 		block value: representation ]
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 NeoJSONCustomMapping >> encoder: block [
 	"Set a encoder block that accepts the next object to be written 
 	and converts it into the actual representation to be written."
@@ -34,12 +35,12 @@ NeoJSONCustomMapping >> encoder: block [
 		jsonWriter nextPut: representation ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONCustomMapping >> identifier [
 	^ schemaName 
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 NeoJSONCustomMapping >> listOfElementSchema: elementSchema [
 	"Set the reader to a block that will create an instance of the
 	standard listClass while reading a list of elements of type elementSchema.
@@ -56,7 +57,7 @@ NeoJSONCustomMapping >> listOfElementSchema: elementSchema [
 				listWriter writeElement: each as: elementSchema ] ] ]
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 NeoJSONCustomMapping >> listOfType: collectionClass [
 	"Set the reader to a block that will create an instance of collectionClass 
 	using #streamContents: while reading a list of elements.
@@ -73,7 +74,7 @@ NeoJSONCustomMapping >> listOfType: collectionClass [
 				listWriter writeElement: each ] ] ]
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 NeoJSONCustomMapping >> listOfType: collectionClass andElementSchema: elementSchema [
 	"Set the reader to a block that will create an instance of collectionClass 
 	using #streamContents: while reading a list of elements of type elementSchema.
@@ -90,7 +91,7 @@ NeoJSONCustomMapping >> listOfType: collectionClass andElementSchema: elementSch
 				listWriter writeElement: each as: elementSchema ] ] ]
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 NeoJSONCustomMapping >> mapWithValueSchema: valueSchema [
 	"Set the reader to a block that will create an instance of the
 	standard mapClass while reading values of type valueSchema,
@@ -108,14 +109,14 @@ NeoJSONCustomMapping >> mapWithValueSchema: valueSchema [
 				mapWriter writeKey: key value: value as: valueSchema ] ] ]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NeoJSONCustomMapping >> readFrom: jsonReader [
 	^ reader 
 		ifNil: [ jsonReader next ]
 		ifNotNil: [ reader value: jsonReader ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONCustomMapping >> reader: block [
 	"Set the reader to block, a 1 argument block that when given 
 	a jsonReader as argument reads the object that I represent.
@@ -124,19 +125,19 @@ NeoJSONCustomMapping >> reader: block [
 	reader := block
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONCustomMapping >> schemaName: schema [
 	schemaName := schema
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 NeoJSONCustomMapping >> writeObject: anObject on: jsonWriter [
 	writer 
 		ifNil: [ anObject neoJsonOn: jsonWriter ]
 		ifNotNil: [ writer value: jsonWriter value: anObject ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONCustomMapping >> writer: block [
 	"Set the writer to block, a 2 argument block that when given: a jsonWriter 
 	and the object to write will write the object that I represent.
