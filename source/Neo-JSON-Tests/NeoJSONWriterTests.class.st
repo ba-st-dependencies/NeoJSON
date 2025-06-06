@@ -2,12 +2,13 @@
 I am NeoJSONWriterTests, a test suite for NeoJSONWriter.
 "
 Class {
-	#name : #NeoJSONWriterTests,
-	#superclass : #TestCase,
-	#category : 'Neo-JSON-Tests'
+	#name : 'NeoJSONWriterTests',
+	#superclass : 'TestCase',
+	#category : 'Neo-JSON-Tests',
+	#package : 'Neo-JSON-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriterTests >> testAsciiOnlyStrings [
 	| writer |
 	writer := [ :object | 
@@ -35,7 +36,7 @@ NeoJSONWriterTests >> testAsciiOnlyStrings [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriterTests >> testAssociation [
 	| writer |
 	writer := [ :object | 
@@ -48,7 +49,7 @@ NeoJSONWriterTests >> testAssociation [
 	self assert: (writer value: Association new) equals: '{}'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriterTests >> testBooleans [
 	| writer |
 	writer := [ :object | 
@@ -58,7 +59,7 @@ NeoJSONWriterTests >> testBooleans [
 	self assert: (writer value: false) equals: 'false'.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriterTests >> testByteArray [
 	| writer |
 	writer := [ :object | 
@@ -69,7 +70,7 @@ NeoJSONWriterTests >> testByteArray [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriterTests >> testDate [
 	| date writer |
 	date := Date newDay: 8 month: 'June' year: 2012.
@@ -82,7 +83,7 @@ NeoJSONWriterTests >> testDate [
 	self assert: (writer value: date) equals: '"2012-06-08"'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriterTests >> testDateAndTime [
 
 	| dateAndTime writer |
@@ -113,7 +114,7 @@ NeoJSONWriterTests >> testDateAndTime [
 		endsWith: '+01:00"')
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriterTests >> testFloatPrinter [
 	| writer |
 	writer := [ :object | 
@@ -133,7 +134,7 @@ NeoJSONWriterTests >> testFloatPrinter [
 	self assert: (writer value: (1/3) asFloat) equals: '0.33333'.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriterTests >> testFloats [
 	| writer |
 	writer := [ :object | 
@@ -144,7 +145,7 @@ NeoJSONWriterTests >> testFloats [
 	self assert: (writer value: 0.0) equals: '0.0'.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriterTests >> testIntegers [
 	| writer |
 	writer := [ :object | 
@@ -155,7 +156,7 @@ NeoJSONWriterTests >> testIntegers [
 	self assert: (writer value: 0) equals: '0'.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriterTests >> testLists [
 	| writer |
 	writer := [ :object | 
@@ -166,7 +167,7 @@ NeoJSONWriterTests >> testLists [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriterTests >> testListsExtra [
 	| writer |
 	writer := [ :object | 
@@ -181,7 +182,7 @@ NeoJSONWriterTests >> testListsExtra [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriterTests >> testMapKeysMustBeStrings [
 	self should: [ NeoJSONWriter toString: { 1->#a } asDictionary ] raise: Error.
 	self should: [ NeoJSONWriter toString: { true->#a } asDictionary ] raise: Error.
@@ -191,7 +192,7 @@ NeoJSONWriterTests >> testMapKeysMustBeStrings [
 	self should: [ NeoJSONWriter toString: { Float pi->#a } asDictionary ] raise: Error.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriterTests >> testMaps [
 	| writer |
 	writer := [ :object | 
@@ -203,7 +204,7 @@ NeoJSONWriterTests >> testMaps [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriterTests >> testMapsExtra [
 	| writer |
 	writer := [ :object | 
@@ -220,7 +221,7 @@ NeoJSONWriterTests >> testMapsExtra [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriterTests >> testNextPutStringAsHex [
 	| output |
 	output := String
@@ -235,7 +236,7 @@ NeoJSONWriterTests >> testNextPutStringAsHex [
 	self assert: output equals: '"466F6F2062617221"'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriterTests >> testNonBMPCharacterEncoding [
 	"Characters not in the Basic Multilingual Plane are encoded as a UTF-16 surrogate pair"
 
@@ -246,7 +247,7 @@ NeoJSONWriterTests >> testNonBMPCharacterEncoding [
 	self assert: json equals: '"\uD834\uDD1E"'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriterTests >> testNull [
 	| writer |
 	writer := [ :object | 
@@ -255,7 +256,7 @@ NeoJSONWriterTests >> testNull [
 	self assert: (writer value: nil) equals: 'null'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NeoJSONWriterTests >> testPoint [
 
 	| writer |
@@ -267,7 +268,7 @@ NeoJSONWriterTests >> testPoint [
 		raise: NeoJSONMappingNotFound
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NeoJSONWriterTests >> testPoint1 [
 	| writer |
 	writer := [ :object | 
@@ -281,7 +282,7 @@ NeoJSONWriterTests >> testPoint1 [
 	self assert: (writer value: NeoJSONMockPoint new) equals: '{}'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NeoJSONWriterTests >> testPoint2 [
 	| writer |
 	writer := [ :object | 
@@ -293,7 +294,7 @@ NeoJSONWriterTests >> testPoint2 [
 	self assert: (writer value: NeoJSONMockPoint new) equals: '{}'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NeoJSONWriterTests >> testPoint3 [
 	| writer |
 	writer := [ :object | 
@@ -306,7 +307,7 @@ NeoJSONWriterTests >> testPoint3 [
 	self assert: (writer value: NeoJSONMockPoint new) equals: '{}'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NeoJSONWriterTests >> testPointUsingAsString [
   | output |
   output := String
@@ -334,7 +335,7 @@ NeoJSONWriterTests >> testPointUsingAsString [
     assert: (output = '{"x":"1","y":"2"}' or: [ output = '{"y":"2","x":"1"}' ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NeoJSONWriterTests >> testPointWriteNil [
 	| writer |
 	writer := [ :object | 
@@ -347,7 +348,7 @@ NeoJSONWriterTests >> testPointWriteNil [
 	self assert: (writer value: NeoJSONMockPoint new) equals: '{"x":null,"y":null}'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriterTests >> testPreservePropertyOrder [
 	| writer testObject |
 	(testObject := NeoJSONTestObject2 new)
@@ -376,7 +377,7 @@ NeoJSONWriterTests >> testPreservePropertyOrder [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriterTests >> testStrings [
 	| writer |
 	writer := [ :object | 
@@ -402,7 +403,7 @@ NeoJSONWriterTests >> testStrings [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriterTests >> testSymbol [
 	| writer |
 	writer := [ :object | 
@@ -413,7 +414,7 @@ NeoJSONWriterTests >> testSymbol [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriterTests >> testTime [
 
 	| time writer |

@@ -1,14 +1,15 @@
 Class {
-	#name : #NeoJSONMockPoint,
-	#superclass : #Object,
+	#name : 'NeoJSONMockPoint',
+	#superclass : 'Object',
 	#instVars : [
 		'x',
 		'y'
 	],
-	#category : 'Neo-JSON-Tests'
+	#category : 'Neo-JSON-Tests',
+	#package : 'Neo-JSON-Tests'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NeoJSONMockPoint class >> x: xValue y: yValue [
 
 	^ self new
@@ -16,33 +17,33 @@ NeoJSONMockPoint class >> x: xValue y: yValue [
 		  yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 NeoJSONMockPoint >> = anObject [
 
 	^ self species = anObject species and: [
 		  x = anObject x and: [ y = anObject y ] ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 NeoJSONMockPoint >> hash [
 
 	^ x hash bitXor: y hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 NeoJSONMockPoint >> setX: xValue setY: yValue [
 
 	x := xValue.
 	y := yValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONMockPoint >> x [
 
 	^ x
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONMockPoint >> y [
 
 	^ y

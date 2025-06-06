@@ -23,8 +23,8 @@ Here are some examples:
 	
 "
 Class {
-	#name : #NeoJSONWriter,
-	#superclass : #NeoJSONMapper,
+	#name : 'NeoJSONWriter',
+	#superclass : 'NeoJSONMapper',
 	#instVars : [
 		'writeStream',
 		'prettyPrint',
@@ -34,10 +34,11 @@ Class {
 		'writeNil',
 		'floatPrinter'
 	],
-	#category : 'Neo-JSON-Core'
+	#category : 'Neo-JSON-Core',
+	#package : 'Neo-JSON-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NeoJSONWriter class >> on: writeStream [
 	"Initialize on writeStream, which should be a character stream that 
 	implements #nextPut:, #nextPutAll:, #space and (optionally) #close."
@@ -47,13 +48,13 @@ NeoJSONWriter class >> on: writeStream [
 		yourself
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 NeoJSONWriter class >> toString: object [
 	^ String streamContents: [ :stream |
 			(self on: stream) nextPut: object ]
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 NeoJSONWriter class >> toStringPretty: object [
 	^ String streamContents: [ :stream |
 			(self on: stream)
@@ -61,14 +62,14 @@ NeoJSONWriter class >> toStringPretty: object [
 				nextPut: object ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 NeoJSONWriter >> asciiOnly: boolean [
 	"Set whether I should escape all non ASCII characters or not"
 	
 	asciiOnly := boolean
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 NeoJSONWriter >> close [
 	"Close the stream that I write to"
 	
@@ -77,14 +78,14 @@ NeoJSONWriter >> close [
 		writeStream := nil ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONWriter >> doesCodePointNeedEscaping: code [
 	code < 32 ifTrue: [ ^ true ].
 	( code = 34 or: [ code = 92 ]) ifTrue: [ ^ true ].
 	^ asciiOnly and: [ code > 126 ]	
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONWriter >> encodeChar: char [
 	| code |
 	code := char codePoint.
@@ -93,7 +94,7 @@ NeoJSONWriter >> encodeChar: char [
 		ifFalse: [ writeStream nextPut: char ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONWriter >> encodeKey: key [
 	key isString ifFalse: [ ^ self error: 'JSON key names in objects must be strings' ].
 	self nextPut: key.
@@ -102,19 +103,19 @@ NeoJSONWriter >> encodeKey: key [
 	self prettyPrintSpace
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONWriter >> encodeKey: key value: value [
 	self encodeKey: key.
 	self nextPut: value
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONWriter >> encodeKey: key value: value as: valueSchema [
 	self encodeKey: key.
 	self nextPut: value as: valueSchema
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONWriter >> escapeChar: code [
 	code = 34
 		ifTrue: [ ^ writeStream nextPutAll: '\"' ].
@@ -135,7 +136,7 @@ NeoJSONWriter >> escapeChar: code [
 	self escapeUnicode: code
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONWriter >> escapeUnicode4: codePoint [
 
 	writeStream
@@ -143,7 +144,7 @@ NeoJSONWriter >> escapeUnicode4: codePoint [
 		nextPutAll: (codePoint asHexStringPaddedTo: 4)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONWriter >> escapeUnicode: codePoint [
 	codePoint <= 16rFFFF
 		ifTrue: [ self escapeUnicode4: codePoint ]
@@ -160,7 +161,7 @@ NeoJSONWriter >> escapeUnicode: codePoint [
 				ifFalse: [ self error: 'Character Unicode code point outside encoder range' ] ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 NeoJSONWriter >> floatPrinter: anObject [
 	"Set the float print, an object that implements #printFloat:on:
 	By default, I am my own float printer"
@@ -168,14 +169,14 @@ NeoJSONWriter >> floatPrinter: anObject [
 	floatPrinter := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONWriter >> indentedDo: block [
 	level := level + 1.
 	block value.
 	level := level - 1
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 NeoJSONWriter >> initialize [
 	super initialize.
 	self newLine: LanguagePlatform current os lineEnding.
@@ -186,28 +187,28 @@ NeoJSONWriter >> initialize [
 	level := 0
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONWriter >> listElementSeparator [
 	writeStream nextPut: $,.
 	self newlineIndent
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONWriter >> mapElementSeparator [
 	writeStream nextPut: $,.
 	self newlineIndent
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 NeoJSONWriter >> newLine: string [
 	"Set the newline string that I should use when pretty printing"
 	
 	newLine := string
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONWriter >> newline [
 	"Write a newline on the stream that I wrap.
 	What gets written depends on the configuration, see #newLine:"
@@ -215,7 +216,7 @@ NeoJSONWriter >> newline [
 	writeStream nextPutAll: newLine
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONWriter >> newlineIndent [
 	prettyPrint
 		ifTrue: [ 
@@ -223,14 +224,14 @@ NeoJSONWriter >> newlineIndent [
 			level timesRepeat: [ writeStream nextPut: Character tab ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONWriter >> nextPut: anObject [
 	"Primary interface. Write a JSON representation of anObject to my stream."
 	
 	anObject neoJsonOn: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONWriter >> nextPut: anObject as: schema [
 	"Secondary interface to write JSON.
 	Write objects according to schema."
@@ -241,7 +242,18 @@ NeoJSONWriter >> nextPut: anObject as: schema [
 	^ mapping writeObject: anObject on: self
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'accessing' }
+NeoJSONWriter >> nextPutAll: aCollection [
+	"Write a separate JSON representation of all objects in aCollection to my stream.
+	This supports Newline delimited JSON (application/x-ndjson) & JSON Lines (application/jsonl).
+	Warning: though each element is valid JSON, taken as a whole the result is non-valid JSON."
+	
+	aCollection do: [ :each |
+		self nextPut: each.
+		self newline ]
+]
+
+{ #category : 'initialize-release' }
 NeoJSONWriter >> on: aWriteStream [
 	"Initialize on aWriteStream, which should be a character stream that 
 	implements #nextPut:, #nextPutAll:, #space and (optionally) #close."
@@ -250,90 +262,90 @@ NeoJSONWriter >> on: aWriteStream [
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 NeoJSONWriter >> prettyPrint: boolean [
 	"Set whether I should pretty print the JSON that I write"
 
 	prettyPrint := boolean
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONWriter >> prettyPrintSpace [
 	prettyPrint
 		ifTrue: [ writeStream nextPut: Character space ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 NeoJSONWriter >> printFloat: float on: stream [
 	"See NeoJSONFloatPrinter for a custom float printer"
 	
 	float printOn: stream
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 NeoJSONWriter >> writeBoolean: boolean [
 	boolean printOn: writeStream
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 NeoJSONWriter >> writeFloat: float [
 	floatPrinter printFloat: float on: writeStream
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 NeoJSONWriter >> writeInteger: integer [
 	integer printOn: writeStream
 	
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 NeoJSONWriter >> writeList: collection [
 	self writeListStreamingDo: [ :jsonListWriter |
 		collection do: [ :each |
 			jsonListWriter writeElement: each ] ]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 NeoJSONWriter >> writeListStreamingDo: block [
 	writeStream nextPut: $[.
 	self writeStreamingDo: block.
 	writeStream nextPut: $]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 NeoJSONWriter >> writeMap: keyValueCollection [
 	self writeMapStreamingDo: [ :jsonMapWriter |
 		keyValueCollection keysAndValuesDo: [ :key :value |
 			jsonMapWriter writeKey: key value: value ] ]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 NeoJSONWriter >> writeMapStreamingDo: block [
 	writeStream nextPut: ${.
 	self writeStreamingDo: block.
 	writeStream nextPut: $}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONWriter >> writeNil [
 	"Return whether I will write nil/null properties of objects or skip them."
 	
 	^ writeNil
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 NeoJSONWriter >> writeNil: boolean [
 	"Set whether I will write nil/null properties of objects or skip them."
 	
 	writeNil := boolean
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 NeoJSONWriter >> writeNull [
 	writeStream nextPutAll: 'null'
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 NeoJSONWriter >> writeObject: anObject [
 	| mapping |
 	mapping := self mappingFor: anObject class.
@@ -342,7 +354,7 @@ NeoJSONWriter >> writeObject: anObject [
 		on: self
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 NeoJSONWriter >> writeStreamingDo: block [
 	| mapWriter |
 	mapWriter := NeoJSONStreamingWriter on: self.
@@ -353,7 +365,7 @@ NeoJSONWriter >> writeStreamingDo: block [
 		ifFalse: [ self prettyPrintSpace ]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 NeoJSONWriter >> writeString: string [
 	writeStream nextPut: $".
 	1 to: string size do: [ :index |

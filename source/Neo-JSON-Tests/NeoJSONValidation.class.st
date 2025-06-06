@@ -28,16 +28,17 @@ This can only be run with the correct setup (checkout/config).
 Logging goes to a file, neo-json-validation.log
 "
 Class {
-	#name : #NeoJSONValidation,
-	#superclass : #Object,
+	#name : 'NeoJSONValidation',
+	#superclass : 'Object',
 	#instVars : [
 		'gitDirectory',
 		'logStream'
 	],
-	#category : 'Neo-JSON-Tests'
+	#category : 'Neo-JSON-Tests',
+	#package : 'Neo-JSON-Tests'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONValidation >> closeLog [
 	logStream ifNotNil: [ 
 		logStream close.
@@ -47,7 +48,7 @@ NeoJSONValidation >> closeLog [
 		ifFalse: [ 'log file is empty' ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONValidation >> ensureLog [
 	logStream ifNil: [ 
 		logStream := self logFile ensureDelete; writeStream. 
@@ -55,94 +56,94 @@ NeoJSONValidation >> ensureLog [
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONValidation >> gitDirectory [
 	^ gitDirectory ifNil: [ gitDirectory := FileLocator home / #Develop / #git ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONValidation >> gitDirectory: fileReference [
 	gitDirectory := fileReference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONValidation >> jsonTestSuiteDirectory [
 	^ self gitDirectory / #JSONTestSuite
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONValidation >> jsonTestSuiteTestParsingDirectory [
 	^ self jsonTestSuiteDirectory / 'test_parsing'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONValidation >> jsonTestSuiteTestParsingFailFiles [
 	^ self jsonTestSuiteTestParsingDirectory childrenMatching: 'n_*.json'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONValidation >> jsonTestSuiteTestParsingInfoFiles [
 	^ self jsonTestSuiteTestParsingDirectory childrenMatching: 'i_*.json'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONValidation >> jsonTestSuiteTestParsingPassFiles [
 	^ self jsonTestSuiteTestParsingDirectory childrenMatching: 'y_*.json'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONValidation >> jsonTestSuiteTestTransformDirectory [
 	^ self jsonTestSuiteDirectory / 'test_transform'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONValidation >> log: message [
 	self ensureLog.
 	logStream nextPutAll: message; lf; flush
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONValidation >> logFile [
 	^ 'neo-json-validation.log' asFileReference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONValidation >> nativeJsonBenchmarkDataDirectory [
 	^ self nativeJsonBenchmarkDirectory / #data
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONValidation >> nativeJsonBenchmarkDirectory [
 	^ self gitDirectory / 'nativejson-benchmark'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONValidation >> nativeJsonBenchmarkJsonCheckerDirectory [
 	^ self nativeJsonBenchmarkDataDirectory / #jsonchecker
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONValidation >> nativeJsonBenchmarkJsonCheckerFailFiles [
 	^ self nativeJsonBenchmarkJsonCheckerDirectory childrenMatching: 'fail*.json'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONValidation >> nativeJsonBenchmarkJsonCheckerPassFiles [
 	^ self nativeJsonBenchmarkJsonCheckerDirectory childrenMatching: 'pass*.json'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONValidation >> nativeJsonBenchmarkRoundTripDirectory [
 	^ self nativeJsonBenchmarkDataDirectory / #roundtrip
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONValidation >> nativeJsonBenchmarkRoundTripFiles [
 	^ self nativeJsonBenchmarkRoundTripDirectory children
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 NeoJSONValidation >> runJsonTestSuiteTestParsingFailures [
 	^ self
 		validateFiles: self jsonTestSuiteTestParsingFailFiles 
@@ -155,7 +156,7 @@ NeoJSONValidation >> runJsonTestSuiteTestParsingFailures [
 			success ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 NeoJSONValidation >> runJsonTestSuiteTestParsingInfo [
 	^ self
 		validateFiles: self jsonTestSuiteTestParsingInfoFiles 
@@ -168,7 +169,7 @@ NeoJSONValidation >> runJsonTestSuiteTestParsingInfo [
 			success ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 NeoJSONValidation >> runJsonTestSuiteTestParsingPasses [
 	^ self
 		validateFiles: self jsonTestSuiteTestParsingPassFiles 
@@ -181,7 +182,7 @@ NeoJSONValidation >> runJsonTestSuiteTestParsingPasses [
 			success ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 NeoJSONValidation >> runNativeJsonBenchmarkJsonCheckerFailures [
 	^ self
 		validateFiles: self nativeJsonBenchmarkJsonCheckerFailFiles
@@ -194,7 +195,7 @@ NeoJSONValidation >> runNativeJsonBenchmarkJsonCheckerFailures [
 			success ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 NeoJSONValidation >> runNativeJsonBenchmarkJsonCheckerPasses [
 	^ self
 		validateFiles: self nativeJsonBenchmarkJsonCheckerPassFiles
@@ -207,7 +208,7 @@ NeoJSONValidation >> runNativeJsonBenchmarkJsonCheckerPasses [
 			success ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 NeoJSONValidation >> runNativeJsonBenchmarkRoundTrip [
 	^ self 
 		validateFiles: self nativeJsonBenchmarkRoundTripFiles
@@ -218,7 +219,7 @@ NeoJSONValidation >> runNativeJsonBenchmarkRoundTrip [
 			json = file contents ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONValidation >> validateFiles: files usingTest: block [
 	| total succeeded failed |
 	total := succeeded := failed := 0.

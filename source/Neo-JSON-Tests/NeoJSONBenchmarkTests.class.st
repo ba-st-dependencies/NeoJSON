@@ -4,12 +4,13 @@ I am NeoJSONBenchmarkTests.
 This test is obviously dependent on hardware, but the margin is quite high.
 "
 Class {
-	#name : #NeoJSONBenchmarkTests,
-	#superclass : #TestCase,
-	#category : 'Neo-JSON-Tests'
+	#name : 'NeoJSONBenchmarkTests',
+	#superclass : 'TestCase',
+	#category : 'Neo-JSON-Tests',
+	#package : 'Neo-JSON-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONBenchmarkTests >> testObject2 [
 	| json |
 	json := NeoJSONWriter toString: NeoJSONTestObject2 new.
@@ -18,7 +19,7 @@ NeoJSONBenchmarkTests >> testObject2 [
 		equals: NeoJSONTestObject2 new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONBenchmarkTests >> testPrettyPrinted [
 	| benchmark |
 	benchmark := NeoJSONBenchmark new.
@@ -27,14 +28,14 @@ NeoJSONBenchmarkTests >> testPrettyPrinted [
 		equals: benchmark read
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONBenchmarkTests >> testRead [
 	| benchmark |
 	benchmark := NeoJSONBenchmark new.
 	benchmark read
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONBenchmarkTests >> testWrite [
 	| benchmark |
 	benchmark := NeoJSONBenchmark new.

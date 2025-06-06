@@ -2,12 +2,39 @@
 NeoJSONExamplesTests runs a couple of examples as tests
 "
 Class {
-	#name : #NeoJSONExamplesTests,
-	#superclass : #TestCase,
-	#category : 'Neo-JSON-Tests'
+	#name : 'NeoJSONExamplesTests',
+	#superclass : 'TestCase',
+	#category : 'Neo-JSON-Tests',
+	#package : 'Neo-JSON-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
+NeoJSONExamplesTests >> testMultiInstances [
+  "Newline delimited JSON (application/x-ndjson) - https://github.com/ndjson/ndjson-spec"
+
+  "JSON Lines (application/jsonl) - https://jsonlines.org"
+
+  | data json allRead firstRead reader |
+  data := ( 1 to: 10 ) collect: [ :each | { ( 'number' -> each ) } asDictionary ].
+
+  json := String streamContents: [ :out | ( NeoJSONWriter on: out ) nextPutAll: data ].
+
+  allRead := ( NeoJSONReader on: json readStream ) upToEnd.
+
+  self assert: allRead size equals: data size.
+  allRead
+    with: data
+    do: [ :read :original | self assert: ( read at: 'number' ) equals: ( original at: 'number' ) ].
+
+  firstRead := ( NeoJSONReader on: json readStream ) next.
+  self assert: ( firstRead at: 'number' ) equals: ( data first at: 'number' ).
+
+  reader := NeoJSONReader on: json readStream.
+  reader next.
+  self deny: reader atEnd
+]
+
+{ #category : 'tests' }
 NeoJSONExamplesTests >> testPoints [
 	| points json result |
 	
@@ -42,7 +69,7 @@ NeoJSONExamplesTests >> testPoints [
 	self assert: result equals: points asOrderedCollection.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NeoJSONExamplesTests >> testRectanglePoints [
 
 	| rectangle rectangleJson result |
@@ -78,7 +105,7 @@ NeoJSONExamplesTests >> testRectanglePoints [
 	self assert: result equals: rectangle
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NeoJSONExamplesTests >> testRectanglePointsWithNils [
 	self
 		assert: 

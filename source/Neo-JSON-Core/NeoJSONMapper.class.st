@@ -30,15 +30,16 @@ Here are some examples:
 
 "
 Class {
-	#name : #NeoJSONMapper,
-	#superclass : #Object,
+	#name : 'NeoJSONMapper',
+	#superclass : 'Object',
 	#instVars : [
 		'mappings'
 	],
-	#category : 'Neo-JSON-Core'
+	#category : 'Neo-JSON-Core',
+	#package : 'Neo-JSON-Core'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONMapper >> customMappingFor: schemaName [
 	^ self mappings
 		at: schemaName
@@ -48,7 +49,7 @@ NeoJSONMapper >> customMappingFor: schemaName [
 				yourself ]
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 NeoJSONMapper >> for: schemaName customDo: block [
 	"Execute the code in block to further customize the mapping for schemaName.
 	Create and add a new custom mapping for schemaName if necessary."
@@ -59,7 +60,7 @@ NeoJSONMapper >> for: schemaName customDo: block [
 	^ mapping
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 NeoJSONMapper >> for: smalltalkClass do: block [
 	"Execute the code in block to further customize the mapping for schemaName.
 	Create and add a new standard object mapping for schemaName if necessary."
@@ -70,7 +71,7 @@ NeoJSONMapper >> for: smalltalkClass do: block [
 	^ mapping
 ]
 
-{ #category : #convencience }
+{ #category : 'convencience' }
 NeoJSONMapper >> mapAllInstVarsFor: smalltalkClass [
 	"Map the instance variables of smalltalkClass and all its super classes"
 
@@ -80,7 +81,7 @@ NeoJSONMapper >> mapAllInstVarsFor: smalltalkClass [
 	^ mapping
 ]
 
-{ #category : #convencience }
+{ #category : 'convencience' }
 NeoJSONMapper >> mapInstVarsFor: smalltalkClass [
 	"Map the instance variables of smalltalkClass"
 
@@ -90,14 +91,14 @@ NeoJSONMapper >> mapInstVarsFor: smalltalkClass [
 	^ mapping
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONMapper >> mappingFor: schema [
 	^ self 
 		mappingFor: schema 
 		ifAbsent: [ NeoJSONMappingNotFound signalFor: schema in: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONMapper >> mappingFor: schema ifAbsent: block [
 	(self mappings includesKey: schema)
 		ifFalse: [ self resolveMappingFor: schema ].
@@ -106,13 +107,13 @@ NeoJSONMapper >> mappingFor: schema ifAbsent: block [
 		ifAbsent: block
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONMapper >> mappings [
 	^ mappings
 		ifNil: [ mappings := Dictionary new ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONMapper >> objectMappingFor: smalltalkClass [
 	^ self mappings
 		at: smalltalkClass
@@ -122,7 +123,7 @@ NeoJSONMapper >> objectMappingFor: smalltalkClass [
 				yourself ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONMapper >> resolveMappingFor: class [
 	(class respondsTo: #neoJsonMapping:)
 		ifTrue: [ 

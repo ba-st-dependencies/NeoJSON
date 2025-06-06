@@ -30,8 +30,8 @@ Here are some examples:
 		nextListAs: Point.
 "
 Class {
-	#name : #NeoJSONReader,
-	#superclass : #NeoJSONMapper,
+	#name : 'NeoJSONReader',
+	#superclass : 'NeoJSONMapper',
 	#instVars : [
 		'readStream',
 		'stringStream',
@@ -39,20 +39,21 @@ Class {
 		'mapClass',
 		'propertyNamesAsSymbols'
 	],
-	#category : 'Neo-JSON-Core'
+	#category : 'Neo-JSON-Core',
+	#package : 'Neo-JSON-Core'
 }
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 NeoJSONReader class >> fromString: string [
 	^ (self on: string readStream) next
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 NeoJSONReader class >> fromString: string as: schema [
 	^ (self on: string readStream) nextAs: schema
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NeoJSONReader class >> on: readStream [
 	"Initialize on readStream, which should be a character stream that 
 	implements #next, #peek, #atEnd and (optionally) #close."
@@ -62,19 +63,19 @@ NeoJSONReader class >> on: readStream [
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONReader >> atEnd [
 	^ readStream atEnd
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 NeoJSONReader >> close [
 	readStream ifNotNil: [
 		readStream close.
 		readStream := nil ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONReader >> consumeWhitespace [
 	"Strip whitespaces from the input stream."
 
@@ -83,12 +84,12 @@ NeoJSONReader >> consumeWhitespace [
 			readStream next ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONReader >> error: text [
 	NeoJSONParseError signal: text
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONReader >> expectChar: character [
 	"Expect character and consume input and optional whitespace at the end,
 	 throw an error otherwise."
@@ -97,43 +98,43 @@ NeoJSONReader >> expectChar: character [
 		ifFalse: [ self error: character asString, ' expected' ]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NeoJSONReader >> failIfNotAtEnd [
 	self atEnd
 		ifFalse: [ self error: 'extraneous input detected' ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 NeoJSONReader >> initialize [ 
 	super initialize.
 	propertyNamesAsSymbols := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONReader >> listClass [
 	"Return the collection type to use for JSON lists"
 	
 	^ listClass ifNil: [ Array ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 NeoJSONReader >> listClass: collectionClass [
 	listClass := collectionClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONReader >> mapClass [
 	"Return the collection type to use for JSON maps"
 	
 	^ mapClass ifNil: [ Dictionary ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 NeoJSONReader >> mapClass: collectionClass [
 	mapClass := collectionClass
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONReader >> match: string do: block [
 	"Try to read and consume string and execute block if successful.
 	Else do nothing (but do not back up)"
@@ -144,7 +145,7 @@ NeoJSONReader >> match: string do: block [
 			block value ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONReader >> matchChar: character [
 	"Tries to match character, consume input and 
 	answer true if successful and consumes whitespace at the end.
@@ -157,7 +158,7 @@ NeoJSONReader >> matchChar: character [
 		ifFalse: [ false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONReader >> next [
 	"Primary interface to parse a JSON value.
 	Return either primitives, a listClass or a mapClass instance."
@@ -167,7 +168,7 @@ NeoJSONReader >> next [
 		parseValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONReader >> nextAs: schema [
 	"Secondary interface to parse JSON.
 	Return an object according to schema.
@@ -180,7 +181,7 @@ NeoJSONReader >> nextAs: schema [
 	^ mapping readFrom: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONReader >> nextListAs: schema [
 	"Secondary interface to parse JSON.
 	Return a list of objects, each element according to schema."
@@ -190,7 +191,7 @@ NeoJSONReader >> nextListAs: schema [
 				stream nextPut: (self nextAs: schema) ] ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 NeoJSONReader >> on: aReadStream [
 	"Initialize on aReadStream, which should be a character stream that 
 	implements #next, #peek, #atEnd and (optionally) #close."
@@ -198,7 +199,7 @@ NeoJSONReader >> on: aReadStream [
 	readStream := aReadStream
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NeoJSONReader >> parseCharacter [
 	| char |
 	(char := readStream next) = $\ 
@@ -214,7 +215,7 @@ NeoJSONReader >> parseCharacter [
 		ifNotNil: [ self error: 'invalid escape character \' , char asString ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONReader >> parseCharacterHex [
 	| value codePoint |
 	value := self parseCharacterHex4Value.
@@ -232,7 +233,7 @@ NeoJSONReader >> parseCharacterHex [
 	^ Character codePoint: codePoint
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONReader >> parseCharacterHex4Value [
 	| value |
 	value := self parseCharacterHexDigit.
@@ -241,7 +242,7 @@ NeoJSONReader >> parseCharacterHex4Value [
 	^ value
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONReader >> parseCharacterHexDigit [
 	| digit |
 	readStream atEnd 
@@ -256,7 +257,7 @@ NeoJSONReader >> parseCharacterHexDigit [
 	self error: 'hex-digit expected'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONReader >> parseConstantDo: block [
 	"Parse and consume either true|false|nil|null and execute block 
 	or else do nothing (but do not back up).
@@ -274,7 +275,7 @@ NeoJSONReader >> parseConstantDo: block [
 
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NeoJSONReader >> parseList [
 	^ self listClass 
 		streamContents: [ :stream |
@@ -284,7 +285,7 @@ NeoJSONReader >> parseList [
 		
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NeoJSONReader >> parseListDo: block [
 	self expectChar: $[.
 	(self matchChar: $]) 
@@ -299,13 +300,13 @@ NeoJSONReader >> parseListDo: block [
 	self error: 'incomplete list'
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NeoJSONReader >> parseListElementsDo: block [
 	self parseListDo: [ 
 		block value: self parseValue ]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NeoJSONReader >> parseMap [
 	| map |
 	map := self mapClass new.
@@ -314,7 +315,7 @@ NeoJSONReader >> parseMap [
 	^ map
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NeoJSONReader >> parseMapDo: block [
 	self expectChar: ${.
 	(self matchChar: $})
@@ -328,13 +329,13 @@ NeoJSONReader >> parseMapDo: block [
 	self error: 'incomplete map'
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NeoJSONReader >> parseMapKeysAndValuesDo: block [
 	self parseMapKeysDo: [ :key |
 		block value: key value: self parseValue ]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NeoJSONReader >> parseMapKeysDo: block [
 	self parseMapDo: [ | key |
 		key := self parsePropertyName.
@@ -342,7 +343,7 @@ NeoJSONReader >> parseMapKeysDo: block [
 		block value: key ]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NeoJSONReader >> parseNumber [
 	| negated number isFloat |
 	negated := readStream peekFor: $-.
@@ -359,7 +360,7 @@ NeoJSONReader >> parseNumber [
 	^ number
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NeoJSONReader >> parseNumberExponent [
 	| number negated |
 	number := 0.
@@ -377,7 +378,7 @@ NeoJSONReader >> parseNumberExponent [
 	^ 10 raisedTo: number
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NeoJSONReader >> parseNumberFraction [
 	| number power |
 	number := 0.
@@ -389,7 +390,7 @@ NeoJSONReader >> parseNumberFraction [
 	^ number / power
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NeoJSONReader >> parseNumberInteger [
 	| number |
 	number := nil.
@@ -400,7 +401,7 @@ NeoJSONReader >> parseNumberInteger [
 	^ number
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NeoJSONReader >> parsePropertyName [
 	| name |
 	name := self parseValue.
@@ -413,7 +414,7 @@ NeoJSONReader >> parsePropertyName [
 			self error: 'property name must be a string, not ', name asString ]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NeoJSONReader >> parseString [
 	| result |
 	(readStream peekFor: $")
@@ -425,14 +426,14 @@ NeoJSONReader >> parseString [
 	^ result
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONReader >> parseTrailingSurrogateHexEscape [
 	(readStream next = $\ and: [ readStream next = $u ])
 		ifTrue: [ ^ self parseCharacterHex4Value ]
 		ifFalse: [ self error: 'trailing surrogate hex escape expected' ]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NeoJSONReader >> parseValue [
 	| char |
 	readStream atEnd ifFalse: [ 
@@ -449,12 +450,12 @@ NeoJSONReader >> parseValue [
 	self error: 'invalid input: ', char asString
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 NeoJSONReader >> propertyNamesAsSymbols: boolean [
 	propertyNamesAsSymbols := boolean
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONReader >> stringStreamClass [
 	"Answer the class of the collection used for the stringStream of receiver.
 	
@@ -464,7 +465,7 @@ NeoJSONReader >> stringStreamClass [
 	^ readStream collectionSpecies
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONReader >> stringStreamContents: block [
 	"Like String streamContents: block
 	but reusing the underlying buffer for improved efficiency"
@@ -476,7 +477,7 @@ NeoJSONReader >> stringStreamContents: block [
 	^ stringStream contents
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONReader >> unescapeChar: char [
 	"Handle one of the named character escapes, b, f, n, r or t. Else fail."
 	
@@ -491,4 +492,14 @@ NeoJSONReader >> unescapeChar: char [
 	char = $t
 		ifTrue: [ ^ Character tab ].
 	self error: 'Unknown escape char: ', (String with: char)
+]
+
+{ #category : 'accessing' }
+NeoJSONReader >> upToEnd [
+	"Parse and collect JSON values from my stream until it ends, returning the collection.
+	This supports Newline delimited JSON (application/x-ndjson) & JSON Lines (application/jsonl).
+	Warning: though each element is valid JSON, taken as a whole the result is non-valid JSON."
+	
+	^ Array streamContents: [ :out |
+		[ self atEnd ] whileFalse: [ out nextPut: self next ] ]
 ]

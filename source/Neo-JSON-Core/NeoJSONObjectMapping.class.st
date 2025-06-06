@@ -11,41 +11,42 @@ A mapping can be based on any combination of instance variables or accessors (ge
 I offer a builder interface to constuct property mappings.
 "
 Class {
-	#name : #NeoJSONObjectMapping,
-	#superclass : #NeoJSONMapping,
+	#name : 'NeoJSONObjectMapping',
+	#superclass : 'NeoJSONMapping',
 	#instVars : [
 		'subjectClass',
 		'properties',
 		'allowNil'
 	],
-	#category : 'Neo-JSON-Core'
+	#category : 'Neo-JSON-Core',
+	#package : 'Neo-JSON-Core'
 }
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 NeoJSONObjectMapping >> allowNil [
 	"Set that I will allow nil/null values when I read/expect an object"
 	
 	allowNil := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONObjectMapping >> identifier [
 	^ subjectClass 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 NeoJSONObjectMapping >> initialize [
 	super initialize.
 	properties := OrderedCollection new.
 	allowNil := false
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 NeoJSONObjectMapping >> mapAccessor: accessor [
 	^ self mapAccessor: accessor to: accessor 
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 NeoJSONObjectMapping >> mapAccessor: accessor mutator: mutator to: propertyName [
 	^ self 
 		mapProperty: propertyName
@@ -53,7 +54,7 @@ NeoJSONObjectMapping >> mapAccessor: accessor mutator: mutator to: propertyName 
 		setter: [ :object :value | object perform: mutator with: value ] 
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 NeoJSONObjectMapping >> mapAccessor: accessor to: propertyName [
 	^ self 
 		mapProperty: propertyName
@@ -61,22 +62,22 @@ NeoJSONObjectMapping >> mapAccessor: accessor to: propertyName [
 		setter: [ :object :value | object perform: accessor asMutator with: value ] 
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 NeoJSONObjectMapping >> mapAccessors: accessors [
 	^ accessors collect: [ :each | self mapAccessor: each ]
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 NeoJSONObjectMapping >> mapAllInstVars [
 	^ self mapInstVars: subjectClass allInstVarNames
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 NeoJSONObjectMapping >> mapInstVar: instVarName [
 	^ self mapInstVar: instVarName to: instVarName 
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 NeoJSONObjectMapping >> mapInstVar: instVarName to: propertyName [
 	| index |
 	index := 
@@ -94,17 +95,17 @@ NeoJSONObjectMapping >> mapInstVar: instVarName to: propertyName [
 
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 NeoJSONObjectMapping >> mapInstVars [
 	^ self mapInstVars: subjectClass instVarNames
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 NeoJSONObjectMapping >> mapInstVars: instVarNames [
 	^ instVarNames collect: [ :each | self mapInstVar: each ]
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 NeoJSONObjectMapping >> mapProperty: propertyName getter: readBlock setter: writeBlock [
 	| propertyMapping |
 	propertyMapping := NeoJSONPropertyMapping new.
@@ -117,14 +118,14 @@ NeoJSONObjectMapping >> mapProperty: propertyName getter: readBlock setter: writ
 	^ propertyMapping 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONObjectMapping >> propertyNamed: propertyName ifAbsent: block [
 	| symbolPropertyName |
 	symbolPropertyName := propertyName asSymbol.
 	^ properties detect: [ :each | each propertyName = symbolPropertyName ] ifNone: block
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NeoJSONObjectMapping >> readFrom: jsonReader [
 	| anObject |
 	anObject := subjectClass new.
@@ -141,12 +142,12 @@ NeoJSONObjectMapping >> readFrom: jsonReader [
 	^ anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONObjectMapping >> subjectClass: smalltalkClass [
 	subjectClass := smalltalkClass
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 NeoJSONObjectMapping >> writeObject: anObject on: jsonWriter [
 	jsonWriter writeMapStreamingDo: [ :jsonMapWriter |
 		properties do: [ :each |

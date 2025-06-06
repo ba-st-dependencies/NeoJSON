@@ -1,0 +1,14 @@
+SmalltalkCISpec {
+  #loading : [
+    SCIMetacelloLoadSpec {
+      #baseline : 'NeoJSON',
+      #directory : '../source',
+      #load : [ 'Deployment' ],
+      #platforms : [  #pharo ],
+      #failOn : [ #Warning ]
+    }
+  ],
+  #testing : {
+    #failOnZeroTests : false
+  }
+}

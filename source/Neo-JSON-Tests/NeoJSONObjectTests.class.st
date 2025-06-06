@@ -3,12 +3,46 @@ I am NeoJSONObjectTests, I hold unit tests for NeoJSONObject.
 
 "
 Class {
-	#name : #NeoJSONObjectTests,
-	#superclass : #TestCase,
-	#category : 'Neo-JSON-Tests'
+	#name : 'NeoJSONObjectTests',
+	#superclass : 'TestCase',
+	#category : 'Neo-JSON-Tests',
+	#package : 'Neo-JSON-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'accessing' }
+NeoJSONObjectTests >> exampleJSONSchema [
+	^ NeoJSONObject fromString: '{
+  "$id" : "https://example.com/schemas/address",
+  "type" : "object",
+  "properties" : {
+    "street_address" : { "$anchor" : "street_address", "type" : "string" },
+    "city" : { "type" : "string" },
+    "state" : { "type" : "string" }
+  }, 
+  "required" : ["street_address", "city", "state"],
+  "$defs" : {
+    "country" : { "type" : "object", "$anchor" : "country", "enum" : ["us","canada","gb"] }
+  }
+}'
+]
+
+{ #category : 'testing' }
+NeoJSONObjectTests >> testArray [
+
+  | jsonArray array |
+  jsonArray := '[1,2,3]'.
+  array := NeoJSONObject fromString: jsonArray.
+  self assert: array printString equals: jsonArray.
+  self assert: array hasTheSameElementsInTheSameOrderThat: #( 1 2 3 ).
+  array at: 1 add: 0.
+  array at: #- add: 4.
+  self assert: array hasTheSameElementsInTheSameOrderThat: #( 0 1 2 3 4 ).
+  array removeKey: 5.
+  array removeKey: 1.
+  self assert: array hasTheSameElementsInTheSameOrderThat: #( 1 2 3 )
+]
+
+{ #category : 'testing' }
 NeoJSONObjectTests >> testAtAt [
 	| object |
 	object := NeoJSONObject new.
@@ -23,7 +57,7 @@ NeoJSONObjectTests >> testAtAt [
 	self assert: (object at: #foo at: #foo) isNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONObjectTests >> testAtPath [
 	| object |
 	object := NeoJSONObject newFrom:  (Array with:  #one -> ( NeoJSONObject newFrom:  (Array with:  #two -> ( NeoJSONObject newFrom: (Array with:  #three -> 42) ) ) )).
@@ -43,7 +77,7 @@ NeoJSONObjectTests >> testAtPath [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONObjectTests >> testAtPathPut [
 	| object |
 	object := NeoJSONObject new.
@@ -66,7 +100,7 @@ NeoJSONObjectTests >> testAtPathPut [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONObjectTests >> testCRUD [
 	| object |
 	object := NeoJSONObject new.
@@ -86,7 +120,62 @@ NeoJSONObjectTests >> testCRUD [
 	self assert: object isEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
+NeoJSONObjectTests >> testFindPath [
+
+  | json path |
+  json := self exampleJSONSchema.
+
+  path := json findPath: [ :object |
+              object isDictionary and: [ ( object at: #'$anchor' ) = 'street_address' ] ].
+  self deny: path isNil.
+  self assert: path equals: #( properties street_address ).
+  self assert: ( ( json atPath: path ) at: #'$anchor' ) equals: 'street_address'.
+
+  path := json findPath: [ :object | object isDictionary and: [ ( object at: #foo ) = 'bar' ] ].
+  self assert: path isNil.
+
+  path := json findPath: [ :object |
+              object isDictionary and: [ ( object at: #'$anchor' ) = 'country' ] ].
+  self deny: path isNil.
+  self assert: path equals: #( #'$defs' country ).
+  self assert: ( ( json atPath: path ) at: #'$anchor' ) equals: 'country'.
+
+  json := NeoJSONObject new
+            at: #'$anchor' put: 'top';
+            yourself.
+  self
+    assert:
+    ( json findPath: [ :object | object isDictionary and: [ ( object at: #'$anchor' ) = 'top' ] ] )
+    equals: #( #(  ) )
+]
+
+{ #category : 'testing' }
+NeoJSONObjectTests >> testFindPaths [
+
+  | json paths |
+  json := self exampleJSONSchema.
+
+  paths := json findPaths: [ :object | object isDictionary and: [ object includesKey: #'$anchor' ] ].
+  self deny: paths isEmpty.
+  self assert: paths asArray equals: #( #( properties street_address )
+     #( #'$defs' country ) ).
+  self assert: ( ( json atPath: paths first ) at: #'$anchor' ) equals: 'street_address'.
+  self assert: ( ( json atPath: paths second ) at: #'$anchor' ) equals: 'country'.
+
+  paths := json findPaths: [ :object | object isDictionary and: [ ( object at: #foo ) = 'bar' ] ].
+  self assert: paths isEmpty.
+
+  paths := json findPaths: [ :object | object isDictionary and: [ object includesKey: #type ] ].
+  self deny: paths isEmpty.
+  paths do: [ :path |
+      self assert: ( #( 'string' 'object' ) includes: ( ( json atPath: path ) at: #type ) ) ].
+
+  paths := json findPaths: [ :_ | true ].
+  paths do: [ :each | self assert: ( json atPath: each ) notNil ]
+]
+
+{ #category : 'testing' }
 NeoJSONObjectTests >> testJSON [
 	| data  json object |
 	data := NeoJSONObject newFrom: (Array with: #foo->1 with: #bar->2 with: #str->'Str!' with: #bool->true with: #flt->1.5).
@@ -98,7 +187,7 @@ NeoJSONObjectTests >> testJSON [
 	self assert: (NeoJSONObject fromString: json) equals: object
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONObjectTests >> testPathAccess [
 	| data |
 	data := NeoJSONObject fromString: '{"foo":1,"bar":2,"array":[{"a":1},{"b":2}]}'.

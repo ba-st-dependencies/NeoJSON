@@ -20,16 +20,17 @@ benchmark := NeoJSONBenchmark new.
 [benchmark write] timeToRun.
 "
 Class {
-	#name : #NeoJSONBenchmark,
-	#superclass : #Object,
+	#name : 'NeoJSONBenchmark',
+	#superclass : 'Object',
 	#instVars : [
 		'objects',
 		'json'
 	],
-	#category : 'Neo-JSON-Tests'
+	#category : 'Neo-JSON-Tests',
+	#package : 'Neo-JSON-Tests'
 }
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 NeoJSONBenchmark >> initialize [
 	super initialize.
 	objects := Array new: 1000.
@@ -47,20 +48,20 @@ NeoJSONBenchmark >> initialize [
 		
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 NeoJSONBenchmark >> read [
 	^ (NeoJSONReader on: json readStream) next
 
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 NeoJSONBenchmark >> write [
 	^ String streamContents: [ :stream |
 		(NeoJSONWriter on: stream) nextPut: objects ]
 
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 NeoJSONBenchmark >> writePrettyPrintedRead [
 	| output |
 	output := String streamContents: [ :stream |

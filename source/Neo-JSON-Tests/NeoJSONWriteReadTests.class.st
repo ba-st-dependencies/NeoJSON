@@ -2,12 +2,13 @@
 I am NeoJSONWriteReadTests.
 "
 Class {
-	#name : #NeoJSONWriteReadTests,
-	#superclass : #TestCase,
-	#category : 'Neo-JSON-Tests'
+	#name : 'NeoJSONWriteReadTests',
+	#superclass : 'TestCase',
+	#category : 'Neo-JSON-Tests',
+	#package : 'Neo-JSON-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriteReadTests >> testDictionaryOfObject2 [
 	| data json reader |
 	data := Dictionary new.
@@ -23,7 +24,7 @@ NeoJSONWriteReadTests >> testDictionaryOfObject2 [
 		equals: data
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriteReadTests >> testFloats [
 	| objects |
 	objects := OrderedCollection new add: Float pi; add: 1.0; add: -1.0; add: 0.0; add: 1.5e6; add: -1.5e6; add: 1.5e-6; add: -1.5e-6; yourself.
@@ -32,7 +33,7 @@ NeoJSONWriteReadTests >> testFloats [
 		do: [ :first :second | self assert: (first closeTo: second) ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriteReadTests >> testIntegers [
 	| objects |
 	objects := Array with: 1 with: -1 with: 0 with: 123467890 with: -1234567890.
@@ -41,7 +42,7 @@ NeoJSONWriteReadTests >> testIntegers [
 		equals: objects
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriteReadTests >> testLists [
 	| objects |
 	objects := Array with: #(1 2 3) with: #() with: #( 'foo' 'bar').
@@ -50,7 +51,7 @@ NeoJSONWriteReadTests >> testLists [
 		equals: objects
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriteReadTests >> testMaps [
 	| objects |
 	objects := Array 
@@ -62,7 +63,7 @@ NeoJSONWriteReadTests >> testMaps [
 		equals: objects
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriteReadTests >> testObject1 [
 	| json |
 	json := NeoJSONWriter toString: NeoJSONTestObject1 example1.
@@ -71,7 +72,7 @@ NeoJSONWriteReadTests >> testObject1 [
 		equals: NeoJSONTestObject1 example1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriteReadTests >> testObject2 [
 	| json |
 	json := NeoJSONWriter toString: NeoJSONTestObject2 example1.
@@ -80,7 +81,7 @@ NeoJSONWriteReadTests >> testObject2 [
 		equals: NeoJSONTestObject2 example1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriteReadTests >> testObject3 [
 	| json |
 	json := NeoJSONWriter toString: NeoJSONTestObject3 example1.
@@ -89,7 +90,7 @@ NeoJSONWriteReadTests >> testObject3 [
 		equals: NeoJSONTestObject3 example1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriteReadTests >> testSpecials [
 	| objects |
 	objects := Array with: true with: false with: nil.
@@ -98,7 +99,7 @@ NeoJSONWriteReadTests >> testSpecials [
 		equals: objects
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriteReadTests >> testStrings [
 	| objects |
 	objects := OrderedCollection new
@@ -112,7 +113,7 @@ NeoJSONWriteReadTests >> testStrings [
 		equals: objects
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONWriteReadTests >> writeRead: object [
 	| json |
 	json := String streamContents: [ :stream |

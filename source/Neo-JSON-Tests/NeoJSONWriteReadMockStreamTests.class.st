@@ -2,12 +2,13 @@
 I am NeoJSONWriteReadMockStreamTests.
 "
 Class {
-	#name : #NeoJSONWriteReadMockStreamTests,
-	#superclass : #NeoJSONWriteReadTests,
-	#category : 'Neo-JSON-Tests'
+	#name : 'NeoJSONWriteReadMockStreamTests',
+	#superclass : 'NeoJSONWriteReadTests',
+	#category : 'Neo-JSON-Tests',
+	#package : 'Neo-JSON-Tests'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONWriteReadMockStreamTests >> writeRead: object [
 	| json |
 	json := String streamContents: [ :stream |
