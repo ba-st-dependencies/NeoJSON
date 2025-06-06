@@ -28,17 +28,18 @@ NeoJSONObjectTests >> exampleJSONSchema [
 
 { #category : 'testing' }
 NeoJSONObjectTests >> testArray [
-	| jsonArray array |
-	jsonArray := '[1,2,3]'.
-	array := NeoJSONObject fromString: jsonArray.
-	self assert: array asString equals: jsonArray.
-	self assertCollection: array hasSameElements: #(1 2 3).
-	array at: 1 add: 0.
-	array at: #- add: 4.
-	self assertCollection: array hasSameElements: #(0 1 2 3 4).
-	array removeKey: 5.
-	array removeKey: 1.
-	self assertCollection: array hasSameElements: #(1 2 3)
+
+  | jsonArray array |
+  jsonArray := '[1,2,3]'.
+  array := NeoJSONObject fromString: jsonArray.
+  self assert: array asString equals: jsonArray.
+  self assertCollection: array hasSameElements: #( 1 2 3 ).
+  array at: 1 add: 0.
+  array at: #- add: 4.
+  self assertCollection: array hasSameElements: #( 0 1 2 3 4 ).
+  array removeKey: 5.
+  array removeKey: 1.
+  self assertCollection: array hasSameElements: #( 1 2 3 )
 ]
 
 { #category : 'testing' }
@@ -121,50 +122,57 @@ NeoJSONObjectTests >> testCRUD [
 
 { #category : 'testing' }
 NeoJSONObjectTests >> testFindPath [
-	| json path |
-	json := self exampleJSONSchema.
-	
-	path := json findPath: [ :object | object isDictionary and: [ (object at: '$anchor') = 'street_address' ] ].
-	self deny: path isNil.
-	self assert: path equals: #(properties street_address).
-	self assert: ((json atPath: path) at: '$anchor') equals: 'street_address'.
-		
-	path := json findPath: [ :object | object isDictionary and: [ (object at: 'foo') = 'bar' ] ].
-	self assert: path isNil.
-	
-	path := json findPath: [ :object | object isDictionary and: [ (object at: '$anchor') = 'country' ] ].
-	self deny: path isNil.
-	self assert: path equals: #('$defs' country).
-	self assert: ((json atPath: path) at: '$anchor') equals: 'country'.
-	
-	json := NeoJSONObject new at: '$anchor' put: 'top'; yourself.
-	self 
-		assert: (json findPath: [ :object | object isDictionary and: [ (object at: '$anchor') = 'top' ] ])
-		equals: #(())
+
+  | json path |
+  json := self exampleJSONSchema.
+
+  path := json findPath: [ :object |
+              object isDictionary and: [ ( object at: #'$anchor' ) = 'street_address' ] ].
+  self deny: path isNil.
+  self assert: path equals: #( properties street_address ).
+  self assert: ( ( json atPath: path ) at: #'$anchor' ) equals: 'street_address'.
+
+  path := json findPath: [ :object | object isDictionary and: [ ( object at: #foo ) = 'bar' ] ].
+  self assert: path isNil.
+
+  path := json findPath: [ :object |
+              object isDictionary and: [ ( object at: #'$anchor' ) = 'country' ] ].
+  self deny: path isNil.
+  self assert: path equals: #( #'$defs' country ).
+  self assert: ( ( json atPath: path ) at: #'$anchor' ) equals: 'country'.
+
+  json := NeoJSONObject new
+            at: #'$anchor' put: 'top';
+            yourself.
+  self
+    assert:
+    ( json findPath: [ :object | object isDictionary and: [ ( object at: #'$anchor' ) = 'top' ] ] )
+    equals: #( #(  ) )
 ]
 
 { #category : 'testing' }
 NeoJSONObjectTests >> testFindPaths [
-	| json paths |
-	json := self exampleJSONSchema.
-	
-	paths := json findPaths: [ :object | object isDictionary and: [ object includesKey: '$anchor' ] ].
-	self deny: paths isEmpty.
-	self assert: paths asArray equals: #((properties street_address) ('$defs' country)).
-	self assert: ((json atPath: paths first) at: '$anchor') equals: 'street_address'.
-	self assert: ((json atPath: paths second) at: '$anchor') equals: 'country'.
-			
-	paths := json findPaths: [ :object | object isDictionary and: [ (object at: 'foo') = 'bar' ] ].
-	self assert: paths isEmpty.
-	
-	paths := json findPaths: [ :object | object isDictionary and: [ object includesKey: #type ] ].
-	self deny: paths isEmpty.
-	paths do: [ :path |
-		self assert: (#(string object) includes: ((json atPath: path) at: #type)) ].
-		
-	paths := json findPaths: [ :_ | true ].
-	paths do: [ :each | 
-		self assert: (json atPath: each) notNil ]
+
+  | json paths |
+  json := self exampleJSONSchema.
+
+  paths := json findPaths: [ :object | object isDictionary and: [ object includesKey: #'$anchor' ] ].
+  self deny: paths isEmpty.
+  self assert: paths asArray equals: #( #( properties street_address )
+     #( #'$defs' country ) ).
+  self assert: ( ( json atPath: paths first ) at: #'$anchor' ) equals: 'street_address'.
+  self assert: ( ( json atPath: paths second ) at: #'$anchor' ) equals: 'country'.
+
+  paths := json findPaths: [ :object | object isDictionary and: [ ( object at: #foo ) = 'bar' ] ].
+  self assert: paths isEmpty.
+
+  paths := json findPaths: [ :object | object isDictionary and: [ object includesKey: #type ] ].
+  self deny: paths isEmpty.
+  paths do: [ :path |
+      self assert: ( #( string object ) includes: ( ( json atPath: path ) at: #type ) ) ].
+
+  paths := json findPaths: [ :_ | true ].
+  paths do: [ :each | self assert: ( json atPath: each ) notNil ]
 ]
 
 { #category : 'testing' }
