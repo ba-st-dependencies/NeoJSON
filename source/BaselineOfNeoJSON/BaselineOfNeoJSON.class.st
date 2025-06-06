@@ -37,7 +37,8 @@ BaselineOfNeoJSON >> setUpDependencies: spec [
 
   spec
     baseline: 'Buoy' with: [ spec repository: 'github://ba-st/Buoy:v8' ];
-    project: 'Buoy-Deployment' copyFrom: 'Buoy' with: [ spec loads: 'Deployment' ]
+    project: 'Buoy-Deployment' copyFrom: 'Buoy' with: [ spec loads: 'Deployment' ];
+    project: 'Buoy-SUnit' copyFrom: 'Buoy' with: [ spec loads: 'Dependent-SUnit-Extensions' ]
 ]
 
 { #category : 'baselines' }
@@ -60,7 +61,8 @@ BaselineOfNeoJSON >> setUpTestPackages: spec [
   spec
     package: 'Neo-JSON-Tests' with: [
         spec requires:
-            #( 'Neo-JSON-Core' 'Neo-JSON-Pharo-Core' 'Neo-JSON-Extensions' 'Neo-JSON-Pharo-Base-Extensions' )
+            #( 'Neo-JSON-Core' 'Neo-JSON-Pharo-Core' 'Neo-JSON-Extensions' 'Neo-JSON-Pharo-Base-Extensions'
+               'Buoy-SUnit' )
       ];
     group: 'Tests' with: 'Neo-JSON-Tests'
 ]
