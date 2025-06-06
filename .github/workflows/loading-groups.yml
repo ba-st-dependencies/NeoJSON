@@ -16,7 +16,7 @@ jobs:
           - Pharo64-12
           - Pharo64-13
         load-spec:
-          - core
+          - deployment
     name: ${{ matrix.smalltalk }} + ${{ matrix.load-spec }}
     steps:
       - uses: actions/checkout@v4

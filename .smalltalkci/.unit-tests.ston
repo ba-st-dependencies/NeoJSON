@@ -3,7 +3,7 @@ SmalltalkCISpec {
     SCIMetacelloLoadSpec {
       #baseline : 'NeoJSON',
       #directory : '../source',
-      #load : [ 'tests' ],
+      #load : [ 'CI' ],
       #platforms : [  #pharo ]
     }
   ],
