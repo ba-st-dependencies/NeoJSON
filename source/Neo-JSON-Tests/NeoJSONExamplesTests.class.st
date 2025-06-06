@@ -10,21 +10,28 @@ Class {
 
 { #category : 'tests' }
 NeoJSONExamplesTests >> testMultiInstances [
-	"Newline delimited JSON (application/x-ndjson) - https://github.com/ndjson/ndjson-spec"
-	"JSON Lines (application/jsonl) - https://jsonlines.org"
+  "Newline delimited JSON (application/x-ndjson) - https://github.com/ndjson/ndjson-spec"
 
-	| data json |
-	
-	data := (1 to: 10) collect: [ :each |
-		{ #number -> each } asDictionary ].
-	
-	json := String streamContents: [ :out |
-		(NeoJSONWriter on: out) nextPutAll: data ].
-	
-	self assert: (NeoJSONReader on: json readStream) upToEnd equals: data.
-	
-	self assert: (NeoJSONReader on: json readStream) next equals: data first.
-	self deny: ((NeoJSONReader on: json readStream) next; atEnd)
+  "JSON Lines (application/jsonl) - https://jsonlines.org"
+
+  | data json allRead firstRead reader |
+  data := ( 1 to: 10 ) collect: [ :each | { ( 'number' -> each ) } asDictionary ].
+
+  json := String streamContents: [ :out | ( NeoJSONWriter on: out ) nextPutAll: data ].
+
+  allRead := ( NeoJSONReader on: json readStream ) upToEnd.
+
+  self assert: allRead size equals: data size.
+  allRead
+    with: data
+    do: [ :read :original | self assert: ( read at: 'number' ) equals: ( original at: 'number' ) ].
+
+  firstRead := ( NeoJSONReader on: json readStream ) next.
+  self assert: ( firstRead at: 'number' ) equals: ( data first at: 'number' ).
+
+  reader := NeoJSONReader on: json readStream.
+  reader next.
+  self deny: reader atEnd
 ]
 
 { #category : 'tests' }

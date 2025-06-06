@@ -32,7 +32,7 @@ NeoJSONObjectTests >> testArray [
   | jsonArray array |
   jsonArray := '[1,2,3]'.
   array := NeoJSONObject fromString: jsonArray.
-  self assert: array asString equals: jsonArray.
+  self assert: array printString equals: jsonArray.
   self assertCollection: array hasSameElements: #( 1 2 3 ).
   array at: 1 add: 0.
   array at: #- add: 4.
