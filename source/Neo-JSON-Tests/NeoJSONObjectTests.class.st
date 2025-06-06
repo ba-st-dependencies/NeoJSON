@@ -169,7 +169,7 @@ NeoJSONObjectTests >> testFindPaths [
   paths := json findPaths: [ :object | object isDictionary and: [ object includesKey: #type ] ].
   self deny: paths isEmpty.
   paths do: [ :path |
-      self assert: ( #( string object ) includes: ( ( json atPath: path ) at: #type ) ) ].
+      self assert: ( #( 'string' 'object' ) includes: ( ( json atPath: path ) at: #type ) ) ].
 
   paths := json findPaths: [ :_ | true ].
   paths do: [ :each | self assert: ( json atPath: each ) notNil ]
