@@ -2,12 +2,13 @@
 I am NeoJSONWriteReadAsciiOnlyTests.
 "
 Class {
-	#name : #NeoJSONWriteReadAsciiOnlyTests,
-	#superclass : #NeoJSONWriteReadTests,
-	#category : 'Neo-JSON-Tests'
+	#name : 'NeoJSONWriteReadAsciiOnlyTests',
+	#superclass : 'NeoJSONWriteReadTests',
+	#category : 'Neo-JSON-Tests',
+	#package : 'Neo-JSON-Tests'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONWriteReadAsciiOnlyTests >> writeRead: object [
 	| json |
 	json := String streamContents: [ :stream |

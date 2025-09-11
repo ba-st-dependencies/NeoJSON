@@ -3,67 +3,68 @@ I am NeoJSONMockStream.
 I wrap another stream to validate the limited API used.
 "
 Class {
-	#name : #NeoJSONMockStream,
-	#superclass : #Object,
+	#name : 'NeoJSONMockStream',
+	#superclass : 'Object',
 	#instVars : [
 		'stream'
 	],
-	#category : 'Neo-JSON-Tests'
+	#category : 'Neo-JSON-Tests',
+	#package : 'Neo-JSON-Tests'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NeoJSONMockStream class >> on: stream [
 	^ self new
 		stream: stream;
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONMockStream >> atEnd [
 	^ stream atEnd
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONMockStream >> close [
 	^ stream close
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONMockStream >> collectionSpecies [
 	^ stream collectionSpecies
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONMockStream >> next [
 	^ stream next
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONMockStream >> nextPut: character [
 	^ stream nextPut: character
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONMockStream >> nextPutAll: string [
 	^ stream nextPutAll: string
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONMockStream >> peek [
 	^ stream peek
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONMockStream >> peekFor: char [
 	^ stream peekFor: char
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONMockStream >> space [
 	^ stream space
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 NeoJSONMockStream >> stream: anObject [
 	stream := anObject
 ]

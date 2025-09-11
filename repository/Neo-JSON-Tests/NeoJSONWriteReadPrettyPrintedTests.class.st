@@ -2,12 +2,13 @@
 I am NeoJSONWriteReadPrettyPrintedTests.
 "
 Class {
-	#name : #NeoJSONWriteReadPrettyPrintedTests,
-	#superclass : #NeoJSONWriteReadTests,
-	#category : 'Neo-JSON-Tests'
+	#name : 'NeoJSONWriteReadPrettyPrintedTests',
+	#superclass : 'NeoJSONWriteReadTests',
+	#category : 'Neo-JSON-Tests',
+	#package : 'Neo-JSON-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriteReadPrettyPrintedTests >> testDictionaryOfObject2 [
 	| data json reader |
 	data := Dictionary new.
@@ -23,7 +24,7 @@ NeoJSONWriteReadPrettyPrintedTests >> testDictionaryOfObject2 [
 		equals: data
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriteReadPrettyPrintedTests >> testObject1 [
 	| json |
 	json := NeoJSONWriter toStringPretty: NeoJSONTestObject1 example1.
@@ -32,7 +33,7 @@ NeoJSONWriteReadPrettyPrintedTests >> testObject1 [
 		equals: NeoJSONTestObject1 example1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriteReadPrettyPrintedTests >> testObject2 [
 	| json |
 	json := NeoJSONWriter toStringPretty: NeoJSONTestObject2 example1.
@@ -41,7 +42,7 @@ NeoJSONWriteReadPrettyPrintedTests >> testObject2 [
 		equals: NeoJSONTestObject2 example1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NeoJSONWriteReadPrettyPrintedTests >> testObject3 [
 	| json |
 	json := NeoJSONWriter toStringPretty: NeoJSONTestObject3 example1.
@@ -50,7 +51,7 @@ NeoJSONWriteReadPrettyPrintedTests >> testObject3 [
 		equals: NeoJSONTestObject3 example1
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NeoJSONWriteReadPrettyPrintedTests >> writeRead: object [
 	| json |
 	json := String streamContents: [ :stream |

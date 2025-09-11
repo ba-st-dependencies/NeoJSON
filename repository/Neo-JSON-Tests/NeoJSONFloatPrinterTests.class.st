@@ -2,21 +2,22 @@
 I am NeoJSONFloatPrinterTests, the collection of unit tests for NeoJSONFloatPrinter.
 "
 Class {
-	#name : #NeoJSONFloatPrinterTests,
-	#superclass : #TestCase,
+	#name : 'NeoJSONFloatPrinterTests',
+	#superclass : 'TestCase',
 	#instVars : [
 		'printer'
 	],
-	#category : #'Neo-JSON-Tests'
+	#category : 'Neo-JSON-Tests',
+	#package : 'Neo-JSON-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 NeoJSONFloatPrinterTests >> setUp [
 	super setUp.
 	printer := NeoJSONFloatPrinter new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NeoJSONFloatPrinterTests >> testDecimalNotation [
 	self assert: (printer print: 1.5) equals: '1.5'.
 	self assert: (printer print: -1.5) equals: '-1.5'.
@@ -33,7 +34,7 @@ NeoJSONFloatPrinterTests >> testDecimalNotation [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NeoJSONFloatPrinterTests >> testInteger [
 	self assert: (printer print: 1.0) equals: '1'.
 	self assert: (printer print: 0.0) equals: '0'.
@@ -43,7 +44,7 @@ NeoJSONFloatPrinterTests >> testInteger [
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NeoJSONFloatPrinterTests >> testLowPrecision [
 	printer := NeoJSONFloatPrinter lowPrecision.
 	self assert: (printer print: (4/3) asFloat) equals: '1.33'.
@@ -57,7 +58,7 @@ NeoJSONFloatPrinterTests >> testLowPrecision [
 	self assert: (printer print: 9.10938356e-31) equals: '9.11e-31'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NeoJSONFloatPrinterTests >> testScientificNotation [
 	self assert: (printer print: 1234567.5) equals: '1.23457e6'. "note the rounding"
 	self assert: (printer print: -1234567.5) equals: '-1.23457e6'. "note the rounding"
@@ -66,7 +67,7 @@ NeoJSONFloatPrinterTests >> testScientificNotation [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NeoJSONFloatPrinterTests >> testScientificOnly [
 	printer := NeoJSONFloatPrinter scientificOnly.
 	self assert: (printer print: (4/3) asFloat) equals: '1.33333e0'.
@@ -79,7 +80,7 @@ NeoJSONFloatPrinterTests >> testScientificOnly [
 	self assert: (printer print: 9.10938356e-31) equals: '9.10938e-31'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NeoJSONFloatPrinterTests >> testSpecialValues [
 	self assert: (printer print: Float zero) equals: '0'.
 	self assert: (printer print: Float nan) equals: 'NaN'.
@@ -87,7 +88,7 @@ NeoJSONFloatPrinterTests >> testSpecialValues [
 	self assert: (printer print: Float infinity negated) equals: '-Inf'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NeoJSONFloatPrinterTests >> testWellKnownConstants [
 	self assert: (printer print: Float pi) equals: '3.14159'.
 	self assert: (printer print: Float e) equals: '2.71828'.

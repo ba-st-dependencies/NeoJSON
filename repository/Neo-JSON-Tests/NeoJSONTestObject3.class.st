@@ -9,16 +9,17 @@ I am used for inheritance testing.
 
 "
 Class {
-	#name : #NeoJSONTestObject3,
-	#superclass : #NeoJSONTestObject2,
+	#name : 'NeoJSONTestObject3',
+	#superclass : 'NeoJSONTestObject2',
 	#instVars : [
 		'color',
 		'transparent'
 	],
-	#category : 'Neo-JSON-Tests'
+	#category : 'Neo-JSON-Tests',
+	#package : 'Neo-JSON-Tests'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NeoJSONTestObject3 class >> example1 [
 	^ super example1
 		data: (String new: 8 withAll: $a);
@@ -27,7 +28,7 @@ NeoJSONTestObject3 class >> example1 [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONTestObject3 class >> neoJsonMapping: mapper [
 	"For inheritance mapping to work, the schema/classname must be self,
 	but the instance variables have to be enumerated manually per class"
@@ -37,14 +38,14 @@ NeoJSONTestObject3 class >> neoJsonMapping: mapper [
 		mapping mapInstVars: #(color transparent) ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 NeoJSONTestObject3 >> = anObject [
 	^ super = anObject 
 		and: [ color = anObject color
 			and: [ transparent = anObject transparent ] ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 NeoJSONTestObject3 >> asDictionary [
 	^ super asDictionary
 		at: #color put: color;
@@ -52,22 +53,22 @@ NeoJSONTestObject3 >> asDictionary [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONTestObject3 >> color [
 	^ color
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONTestObject3 >> color: anObject [
 	color := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONTestObject3 >> transparent [
 	^ transparent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NeoJSONTestObject3 >> transparent: anObject [
 	transparent := anObject
 ]
