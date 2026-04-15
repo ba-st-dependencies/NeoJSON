@@ -37,7 +37,8 @@ Class {
 		'stringStream',
 		'listClass',
 		'mapClass',
-		'propertyNamesAsSymbols'
+		'propertyNamesAsSymbols',
+		'decimalParser'
 	],
 	#category : 'Neo-JSON-Core',
 	#package : 'Neo-JSON-Core'
@@ -84,6 +85,12 @@ NeoJSONReader >> consumeWhitespace [
 			readStream next ]
 ]
 
+{ #category : 'initialize-release' }
+NeoJSONReader >> decimalParser: parsingBlock [
+
+  decimalParser := parsingBlock
+]
+
 { #category : 'private' }
 NeoJSONReader >> error: text [
 	NeoJSONParseError signal: text
@@ -107,7 +114,8 @@ NeoJSONReader >> failIfNotAtEnd [
 { #category : 'initialize-release' }
 NeoJSONReader >> initialize [ 
 	super initialize.
-	propertyNamesAsSymbols := false
+	propertyNamesAsSymbols := false.
+	decimalParser := [ :number | number asFloat ]
 ]
 
 { #category : 'accessing' }
@@ -345,18 +353,19 @@ NeoJSONReader >> parseMapKeysDo: block [
 
 { #category : 'parsing' }
 NeoJSONReader >> parseNumber [
-	| negated number isFloat |
+	| negated number isDecimal |
 	negated := readStream peekFor: $-.
 	number := self parseNumberInteger.
-	isFloat := (readStream peekFor: $.)
+	isDecimal := (readStream peekFor: $.)
 		ifTrue: [ number := number + self parseNumberFraction. true ]
 		ifFalse: [ false ].
 	((readStream peekFor: $e) or: [ readStream peekFor: $E ])
 		ifTrue: [ number := number * self parseNumberExponent ].
-	isFloat ifTrue: [ number := number asFloat ].
+	isDecimal ifTrue: [ number := decimalParser value: number ].
 	negated
 		ifTrue: [ number := number negated ].
 	self consumeWhitespace.
+
 	^ number
 ]
 

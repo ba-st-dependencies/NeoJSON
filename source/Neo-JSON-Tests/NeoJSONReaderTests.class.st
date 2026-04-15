@@ -133,6 +133,34 @@ NeoJSONReaderTests >> testDateAndTime [
 ]
 
 { #category : 'testing' }
+NeoJSONReaderTests >> testDecimals [
+
+  | reader |
+  reader := [ :string |
+              ( NeoJSONReader on: string readStream )
+                decimalParser: [ :number | number ];
+                next
+            ].
+  self assert: ( reader value: '123.0' ) equals: 123.
+  self assert: ( reader value: '-123.0' ) equals: -123.
+  self assert: ( reader value: '123.0e0' ) equals: 123.
+  self assert: ( reader value: '123e6' ) equals: 123e6.
+  self assert: ( reader value: '123e+6' ) equals: 123e6.
+  self assert: ( reader value: '123e-6' ) equals: 123 / 1000000.
+  self assert: ( reader value: '123E6' ) equals: 123e6.
+  self assert: ( reader value: '123E+6' ) equals: 123e6.
+  self assert: ( reader value: '123E-6' ) equals: 123 / 1000000.
+  self assert: ( reader value: '-123e6' ) equals: -123e6.
+  self assert: ( reader value: '-123e-6' ) equals: -123 / 1000000.
+  self assert: ( reader value: '-123E6' ) equals: -123000000.
+  self assert: ( reader value: '-123E-6' ) equals: -123 / 1000000.
+  self assert: ( reader value: '0.123e6' ) equals: 0.123e6.
+  self assert: ( reader value: '0.123e-6' ) equals: 123 / 1000000000.
+  self assert: ( reader value: '-0.123E6' ) equals: -123000.
+  self assert: ( reader value: '-0.123E-6' ) equals: -123 / 1000000000
+]
+
+{ #category : 'testing' }
 NeoJSONReaderTests >> testFloats [
 	| reader |
 	reader := [ :string |
